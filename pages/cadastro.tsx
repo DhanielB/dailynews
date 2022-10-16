@@ -7,8 +7,6 @@ import Layout from "../components/Layout";
 const SignUp = () => {
   const [emailData, setEmailData] = useState("");
 
-  useUser({ redirectTo: "/app", redirectIfFound: true });
-
   async function handleSignUp(event) {
     event.preventDefault();
 
