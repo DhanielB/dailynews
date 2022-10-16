@@ -28,10 +28,10 @@ const Home = () => {
         return (
           <li className="md:ml-4 cursor-pointer pb-2 pr-4" key={id}>
             <h1 className="font-[500] md:text-base hover:underline" onClick={() => {
-            router.push(`/${formatText(by)}/${formatText(title)}`)
+            router.push(`/pagina/${formatText(by)}/${formatText(title)}`)
           }}>{id}. {title}</h1>
             <p className="text-gray-500 ml-[1rem] text-[0.8rem] md:ml-[1rem] md:text-[0.75rem]"><span>{comment} comentário</span> · <span className="hover:underline" onClick={() => {
-            router.push(`/${formatText(by)}`)
+            router.push(`/pagina/${formatText(by)}`)
           }}>{by}</span> · <span>{on}</span></p>
           </li>
         )
