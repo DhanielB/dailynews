@@ -12,15 +12,7 @@ export default function username() {
         <h1 className="m-[1.5rem] font-extrabold text-[2rem] text-[#23292f]">{username}</h1>
       </div>
       
-      <ul className="md:ml-[1.25rem] md:top-[10rem] md:left-[10rem]">{[
-        {
-          id: 1,
-          title: "Tab News",
-          comment: 0,
-          by: 'Felipe Deschamps',
-          on: '15 horas atrás'
-        }
-      ].map((news) => {
+      <ul className="md:ml-[1.25rem] md:top-[10rem] md:left-[10rem]">{[ { id: 1, title: "Tab News", comment: 0, by: 'Felipe Deschamps', on: '15 horas atrás' }, { id: 2, title: "Gerando uma imagem microscópica - Uma brincadeirinha divertida =)", comment: 0, by: 'melchisedech333', on: '18 horas atrás' } ].map((news) => {
         const { id, title, comment, by, on } = news
 
         if(username == formatText(by)) {
