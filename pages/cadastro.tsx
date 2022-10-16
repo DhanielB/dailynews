@@ -1,5 +1,4 @@
 import Router from "next/router";
-import { useUser } from "../lib/auth/hooks";
 
 import { Magic } from "magic-sdk";
 import { useState } from "react";
