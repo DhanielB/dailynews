@@ -33,10 +33,7 @@ export default function Header() {
       </a>
       <a onClick={() => {
         setLokingAt('relevant')
-        
-        if(router.pathname == '/recent') {
-          router.push('/')
-        }
+        router.push('/')
       }} className="relevant text-white font-[600] top-[1.225rem] left-[3.5rem] text-[0.875rem] md:text-[0.9rem] md:top-[1.5rem] md:left-[8.95rem] absolute">
         Relevantes
       </a>
