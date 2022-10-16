@@ -1,5 +1,4 @@
 import Router from "next/router";
-import { useUser } from "../lib/auth/hooks";
 
 import { Magic } from "magic-sdk";
 import { useState } from "react";
@@ -7,8 +6,6 @@ import Layout from "../components/Layout";
 
 const Login = () => {
   const [emailData, setEmailData] = useState("");
-
-  useUser({ redirectTo: "/profile", redirectIfFound: true });
 
   async function handleLogin(event) {
     event.preventDefault();
