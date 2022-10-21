@@ -12,7 +12,7 @@ export default function username() {
         <h1 className="w-[22.5rem] pb-4 m-[1.5rem] font-extrabold text-[2rem] text-[#23292f] border-b">{username}</h1>
       </div>
       
-      <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">{[
+      <ul className="w-[22.5rem] pb-4 m-[1.5rem] font-extrabold text-[2rem] text-[#23292f] border-b">{[
         {
           id: 1,
           title: "Tab News",
@@ -31,7 +31,7 @@ export default function username() {
         const { id, title, comment, by, on } = news
 
         return (
-          <li className="md:ml-4 cursor-pointer pb-2 pr-4" key={id}>
+          <li className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:top-[10rqem] md:left-[10rem] absolute" key={id}>
             <h1 className="font-[500] md:text-base hover:underline" onClick={() => {
             router.push(`/pagina/${formatText(by)}/${formatText(title)}`)
           }}>{id}. {title}</h1>
