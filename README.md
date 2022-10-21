@@ -1,3 +1,4 @@
+z
 # Magic Example
 
 This example shows how to use [Magic](https://magic.link) with Next.js. The example features cookie-based, passwordless authentication with email-based magic links.

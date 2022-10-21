@@ -6,6 +6,7 @@ export default function formatText(text: string): string {
           output += text.charAt(i);
       }
   }
+  
 
-  return output.toLowerCase().replaceAll(" ", "-")
+  return output.toLowerCase().replace(/[ ]/g, "-")
 }
