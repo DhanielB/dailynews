@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import filterObject from "../../aflito/lib/filterObject";
+import filterObject from "../../lib/filterObject";
 
 export default async function findContact({
   name,
