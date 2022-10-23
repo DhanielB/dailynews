@@ -5,9 +5,10 @@ import { useState } from "react";
 import Layout from "../components/Layout";
 import { useUser } from "../lib/hooks/useUser";
 import axios from "axios";
+import formatText from "../lib/hooks/formatText";
 
 const SignUp = () => {
-  useUser({ redirectTo: '/publicar', redirectIfFound: true })
+  useUser({ redirectTo: "/publicar", redirectIfFound: true });
 
   const [userData, setUserData] = useState("");
   const [emailData, setEmailData] = useState("");
@@ -25,28 +26,32 @@ const SignUp = () => {
         email: body.email,
       });
 
-      const res = await fetch("/api/v1/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + didToken,
-        },
-        body: JSON.stringify(body),
+      const responseUser = await axios.post("/api/v1/db/findUser", {
+        email: body.email,
       });
 
-      if (res.status === 200) {
-        const userRes = await axios.post("/api/v1/db/createUser", {
-            name: userData,
-            email: emailData,
+      if (responseUser.data.count == 0) {
+        const responseCreateUser = await axios.post("/api/v1/db/createUser", {
+          name: formatText(userData),
+          email: body.email,
+        });
+
+        if (responseCreateUser.status == 200) {
+          const responseLogin = await fetch("/api/v1/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + didToken,
+            },
+            body: JSON.stringify(body),
           });
 
-        if(userRes.status == 200) {
-          Router.push("/publicar");
-        } else {
-          console.log(await userRes.data.text());
+          if (responseLogin.status == 200) {
+            Router.push("/publicar");
+          } else {
+            console.log(await responseLogin.text());
+          }
         }
-      } else {
-        console.log(await res.text());
       }
     } catch (error) {
       console.error("An unexpected error happened occurred:", error);

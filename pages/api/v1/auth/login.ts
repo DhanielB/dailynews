@@ -1,5 +1,6 @@
 import { magic } from "../../../../lib/auth/magic";
 import { setLoginSession } from "../../../../lib/auth/auth";
+import axios from "axios";
 
 export default async function login(req, res) {
   try {
