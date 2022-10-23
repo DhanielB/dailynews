@@ -3,8 +3,13 @@ import Router from "next/router";
 import { Magic } from "magic-sdk";
 import { useState } from "react";
 import Layout from "../components/Layout";
+import { useUser } from "../lib/hooks/useUser";
+import axios from "axios";
 
 const SignUp = () => {
+  useUser({ redirectTo: '/publicar', redirectIfFound: true })
+
+  const [userData, setUserData] = useState("");
   const [emailData, setEmailData] = useState("");
 
   async function handleSignUp(event) {
@@ -19,18 +24,29 @@ const SignUp = () => {
       const didToken = await magic.auth.loginWithMagicLink({
         email: body.email,
       });
+
       const res = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + didToken
+          Authorization: "Bearer " + didToken,
         },
         body: JSON.stringify(body),
       });
+
       if (res.status === 200) {
-        Router.push("/app");
+        const userRes = await axios.post("/api/v1/db/createUser", {
+            name: userData,
+            email: emailData,
+          });
+
+        if(userRes.status == 200) {
+          Router.push("/publicar");
+        } else {
+          console.log(await userRes.data.text());
+        }
       } else {
-        throw new Error(await res.text());
+        console.log(await res.text());
       }
     } catch (error) {
       console.error("An unexpected error happened occurred:", error);
@@ -39,7 +55,35 @@ const SignUp = () => {
 
   return (
     <Layout>
-      
+      <form onSubmit={handleSignUp}>
+        <h1 className="font-semibold md:pt-[2rem] md:pl-[15.5rem] md:text-[1.95rem]">
+          Cadastro
+        </h1>
+
+        <p className="font-semibold md:left-[16rem] md:top-[5.45rem] md:text-[0.875rem] absolute">
+          Nome de Usuário
+        </p>
+        <input
+          onChange={(e) => {
+            setUserData(e.currentTarget.value);
+          }}
+          className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
+        ></input>
+
+        <p className="font-semibold md:left-[16rem] md:top-[11rem] md:text-[0.875rem] absolute">
+          Email
+        </p>
+        <input
+          onChange={(e) => {
+            setEmailData(e.currentTarget.value);
+          }}
+          className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[12.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
+        ></input>
+
+        <button className="text-base top-[32.75rem] left-[19.5rem] border border-gray-400 px-3 py-[0.35rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[16rem] md:left-[16rem] md:w-[31.5rem] absolute">
+          Publicar
+        </button>
+      </form>
     </Layout>
   );
 };

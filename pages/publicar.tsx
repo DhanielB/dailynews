@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Layout from "../components/Layout";
+import { useUser } from "../lib/hooks/useUser";
 
 export default function Publicar() {
+  useUser({ redirectTo: '/cadastro' })
+
   const [mode, setMode] = useState('write')
 
   return (
