@@ -9,6 +9,7 @@ function MyApp({ Component, pageProps }) {
       <Script src="//cdn.jsdelivr.net/npm/eruda"></Script>
       <Script>eruda.init();</Script>
     </div>
+  )
 }
 
 export default MyApp;
