@@ -56,31 +56,31 @@ const SignUp = () => {
   return (
     <Layout>
       <form onSubmit={handleSignUp}>
-        <h1 className="font-semibold md:pt-[2rem] md:pl-[15.5rem] md:text-[1.95rem]">
+        <h1 className="text-[2rem] pt-[2rem] pl-[0.85rem] font-semibold md:pt-[2rem] md:pl-[15.5rem] md:text-[1.95rem]">
           Cadastro
         </h1>
 
-        <p className="font-semibold md:left-[16rem] md:top-[5.45rem] md:text-[0.875rem] absolute">
+        <p className="font-semibold top-[5.9rem] left-[1rem] md:left-[16rem] md:top-[5.45rem] md:text-[0.875rem] absolute">
           Nome de Usuário
         </p>
         <input
           onChange={(e) => {
             setUserData(e.currentTarget.value);
           }}
-          className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
+          className="text-5 px-4 py-[0.75rem] top-[7rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
         ></input>
 
-        <p className="font-semibold md:left-[16rem] md:top-[11rem] md:text-[0.875rem] absolute">
+        <p className="font-semibold top-[10.85rem] left-[1rem] md:left-[16rem] md:top-[11rem] md:text-[0.875rem] absolute">
           Email
         </p>
         <input
           onChange={(e) => {
             setEmailData(e.currentTarget.value);
           }}
-          className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[12.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
+          className="text-5 px-4 py-[0.75rem] top-[12rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[12.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
         ></input>
 
-        <button className="text-base top-[32.75rem] left-[19.5rem] border border-gray-400 px-3 py-[0.35rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[16rem] md:left-[16rem] md:w-[31.5rem] absolute">
+        <button className="w-[24.7rem] text-base top-[16rem] left-[0.5rem] border border-gray-400 px-3 py-[0.35rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[16rem] md:left-[16rem] md:w-[31.5rem] absolute">
           Publicar
         </button>
       </form>
