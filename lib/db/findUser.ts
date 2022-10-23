@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import filterObject from "../../lib/filterObject";
+import filterObject from "../hooks/filterObject";
 
 export default async function findContact({
   name,
