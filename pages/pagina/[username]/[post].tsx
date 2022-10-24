@@ -30,12 +30,13 @@ export default function username() {
   return (
     <Layout>
       {newsFetched.map((news) => {
-        const { title, by, content } = news
-
-        return (
-          <div className="p-[1rem]">
-            <Viewer value={`# ${title} - ${by}\n${content}`}></Viewer>
-          </div>
+        const { title, titleSlug by, content } = news
+        
+        if(by == username && titleSlug == post) {
+          return (
+            <div className="p-[1rem]">
+              <Viewer value={`# ${title} - ${by}\n${content}`}></Viewer>
+            </div>
         )
       })}
     </Layout>
