@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 
-export async function getServerSideProps(context) {
+const Home = () => {
+  const router = useRouter()
+  
   const [newsFetched, setNewsFetched] = useState([])
 
   async function handleInit() {
@@ -13,15 +15,9 @@ export async function getServerSideProps(context) {
     setNewsFetched(responseNews.data.data)
   }
 
-  return {
-    props: {
-      newsFetched
-    },
-  }
-}
-
-const Home = ({ newsFetched }) => {
-  const router = useRouter()
+  useEffect(() => {
+    handleInit()
+  }, [])
   
   return (
     <Layout>
