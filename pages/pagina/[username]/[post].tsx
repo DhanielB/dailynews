@@ -33,7 +33,7 @@ export default function username() {
         const { title, by, content } = news
 
         return (
-          <div className="pr-[1rem]">
+          <div className="px-[1rem]">
             <Viewer value={`# ${title} - ${by}\n${content}`}></Viewer>
           </div>
         )
