@@ -6,7 +6,6 @@ import formatText from "../lib/hooks/formatText";
 
 const Home = () => {
   const router = useRouter()
-  let newsCounted = 1
   
   const [newsFetched, setNewsFetched] = useState([])
 
@@ -22,10 +21,8 @@ const Home = () => {
   
   return (
     <Layout>
-      <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">{newsFetched.map((news) => {
+      <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">{newsFetched.map((news, newsCounted) => {
         const { title, comment, by, on } = news
-
-        newsCounted += 1
 
         return (
           <li className="md:ml-4 cursor-pointer pb-2 pr-4" key={newsFetched.length - newsCounted}>
