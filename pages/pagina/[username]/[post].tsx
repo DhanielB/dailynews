@@ -30,8 +30,9 @@ export default function username() {
   return (
     <Layout>
       {newsFetched.map((news) => {
-        const { title, titleSlug by, content } = news
+        const { title, titleSlug, by, content } = news
         
+        alert(`Post: ${post}, TitleSlug: ${titleSlug}, Username: ${username}, By: ${by}
         if(by == username && titleSlug == post) {
           return (
             <div className="p-[1rem]">
