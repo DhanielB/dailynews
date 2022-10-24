@@ -17,6 +17,7 @@ import "bytemd/dist/index.min.css";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
+import math from '@bytemd/plugin-math'
 
 export default function Publicar() {
   const user = useUser({ redirectTo: "/cadastro" });
@@ -33,6 +34,7 @@ export default function Publicar() {
     mermaidPlugin({ locale: mermaidLocale }),
     breaksPlugin(),
     gemojiPlugin(),
+    math(),
   ];
 
   async function handlePublish(event) {
@@ -80,7 +82,7 @@ export default function Publicar() {
       <div>
         {mode == "view" ? (
           <div className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute">
-            <Viewer value={content}></Viewer>
+            <Viewer plugins={bytemdPluginList} value={content}></Viewer>
           </div>
         ) : (
           <div>
