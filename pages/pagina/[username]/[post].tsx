@@ -38,7 +38,8 @@ export default function username() {
             <div className="p-[1rem]">
               <Viewer value={`# ${title} - ${by}\n${content}`}></Viewer>
             </div>
-        )
+          )
+        }
       })}
     </Layout>
   )
