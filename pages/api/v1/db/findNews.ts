@@ -5,10 +5,11 @@ export default async function findNews(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, by, slug, sourceUrl, content } = req.body;
+  const { title, titleSlug, by, slug, sourceUrl, content } = req.body;
 
   const data = await findNewsHook({
     title: title,
+    titleSlug: titleSlug,
     by: by,
     slug: slug,
     sourceUrl: sourceUrl,

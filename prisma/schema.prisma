@@ -13,6 +13,7 @@ datasource db {
 model News {
   id           String @id @default(auto()) @map("_id") @db.ObjectId
   title        String
+  titleSlug    String
   commentCount Int
   by           String
   slug         String

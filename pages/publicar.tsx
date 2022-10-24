@@ -4,6 +4,19 @@ import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { useUser } from "../lib/hooks/useUser";
 import Router from "next/router";
+import { Viewer, Editor } from "@bytemd/react";
+import gfmPlugin from "@bytemd/plugin-gfm";
+import highlightSsrPlugin from "@bytemd/plugin-highlight-ssr";
+import mermaidPlugin from "@bytemd/plugin-mermaid";
+import breaksPlugin from "@bytemd/plugin-breaks";
+import gemojiPlugin from "@bytemd/plugin-gemoji";
+import byteMDLocale from "bytemd/locales/pt_BR.json";
+import gfmLocale from "@bytemd/plugin-gfm/locales/pt_BR.json";
+import mermaidLocale from "@bytemd/plugin-mermaid/locales/pt_BR.json";
+import "bytemd/dist/index.min.css";
+import "bytemd/dist/index.min.css";
+import "highlight.js/styles/github.css";
+import "github-markdown-css/github-markdown-light.css";
 
 export default function Publicar() {
   const user = useUser({ redirectTo: "/cadastro" });
@@ -13,6 +26,14 @@ export default function Publicar() {
   const [content, setContent] = useState("");
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
+
+  const bytemdPluginList = [
+    gfmPlugin({ locale: gfmLocale }),
+    highlightSsrPlugin(),
+    mermaidPlugin({ locale: mermaidLocale }),
+    breaksPlugin(),
+    gemojiPlugin(),
+  ];
 
   async function handlePublish(event) {
     event.preventDefault();
@@ -55,18 +76,30 @@ export default function Publicar() {
         className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
         placeholder="Título"
       ></input>
+
       <div>
-        <textarea
-          onChange={(e) => {
-            setContent(e.currentTarget.value);
-          }}
-          className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
-        ></textarea>
+        {mode == "view" ? (
+          <div className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute">
+            <Viewer value={content}></Viewer>
+          </div>
+        ) : (
+          <div>
+            <textarea
+            className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
+              onChange={(e) => {
+                setContent(e.currentTarget.value);
+              }}
+              defaultValue={content}
+              value={content}
+            ></textarea>
+          </div>
+        )}
+
         <button
           onClick={() => {
             setMode("write");
           }}
-          className="write text-[0.9rem] top-[10rem] left-[3rem] md:text-[0.9rem] md:top-[10rem] md:left-[3rem] absolute"
+          className="write z-50 text-[0.9rem] top-[10rem] left-[3rem] md:text-[0.9rem] md:top-[10rem] md:left-[3rem] absolute"
         >
           Escrever
         </button>
@@ -74,7 +107,7 @@ export default function Publicar() {
           onClick={() => {
             setMode("view");
           }}
-          className="view text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
+          className="view z-50 text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
         >
           Visualizar
         </button>

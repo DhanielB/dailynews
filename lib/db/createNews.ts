@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import formatText from "../hooks/formatText";
 
 export default async function createNews({
   title,
@@ -19,6 +20,7 @@ export default async function createNews({
   const news = await prisma.news.create({
     data: {
       title: title,
+      titleSlug: formatText(title),
       commentCount: 0,
       by: by,
       slug: slug,

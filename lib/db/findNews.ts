@@ -1,14 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import filterObject from "../hooks/filterObject";
 
-export default async function findUser({
+export default async function findNews({
   title,
+  titleSlug,
   by,
   slug,
   sourceUrl,
   content,
 }: {
   title: string;
+  titleSlug: string;
   by: string;
   slug: string;
   sourceUrl: string;
@@ -21,6 +23,7 @@ export default async function findUser({
     //@ts-ignore
     where: filterObject({
       title: title,
+      titleSlug: titleSlug,
       by: by,
       slug: slug,
       sourceUrl: sourceUrl,
