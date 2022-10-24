@@ -28,7 +28,7 @@ export default function username() {
         <h1 className="w-[22.5rem] pb-4 m-[1.5rem] font-extrabold text-[2rem] text-[#23292f] border-b">{username}</h1>
       </div>
       
-      <ul className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:top-[10rqem] md:left-[10rem] absolute">{newsFetched.map((news,index) => {
+      <ul className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:top-[10rem] md:left-[10rem] absolute">{newsFetched.map((news,index) => {
         const { title, comment, by, on } = news
 
         return (
