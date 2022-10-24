@@ -32,7 +32,6 @@ export default function username() {
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content } = news
         
-        alert(`Post: ${post}, TitleSlug: ${titleSlug}, Username: ${username}, By: ${by}`)
         if(by == username && titleSlug == post) {
           return (
             <div className="p-[1rem]">
