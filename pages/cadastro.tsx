@@ -82,6 +82,7 @@ const SignUp = () => {
           onChange={(e) => {
             setEmailData(e.currentTarget.value);
           }}
+          type="email"
           className="text-5 px-4 py-[0.75rem] top-[12rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[12.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
         ></input>
 
