@@ -21,7 +21,7 @@ export default function username() {
     })
 
     setNewsFetched([
-      ..responseNews.data.data[0]
+      ...responseNews.data.data[0]
     ])
   }
 
