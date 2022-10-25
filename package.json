@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "date-fns": "*",
     "@bytemd/plugin-math": "*",
     "@bytemd/plugin-breaks": "^1.17.4",
     "@bytemd/plugin-gemoji": "^1.17.4",
