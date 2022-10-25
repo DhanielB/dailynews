@@ -20,7 +20,9 @@ export default function username() {
       titleSlug: post
     })
 
-    setNewsFetched(responseNews.data.data)
+    setNewsFetched([
+      ..responseNews.data.data[0]
+    ])
   }
 
   useEffect(() => {
