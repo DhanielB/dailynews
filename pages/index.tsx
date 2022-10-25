@@ -22,14 +22,14 @@ const Home = () => {
   return (
     <Layout>
       <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">{newsFetched.map((news, newsCounted) => {
-        const { title, comment, by, on } = news
+        const { title, commentCount, by, on } = news
 
         return (
           <li className="md:ml-4 cursor-pointer pb-2 pr-4" key={newsCounted + 1}>
             <h1 className="font-[500] md:text-base hover:underline" onClick={() => {
             router.push(`/pagina/${formatText(by)}/${formatText(title)}`)
           }}>{newsCounted + 1}. {title}</h1>
-            <p className="text-gray-500 ml-[1rem] text-[0.8rem] md:ml-[1rem] md:text-[0.75rem]"><span>{comment} comentário</span> · <span className="hover:underline" onClick={() => {
+            <p className="text-gray-500 ml-[1rem] text-[0.8rem] md:ml-[1rem] md:text-[0.75rem]"><span>{commentCount} comentário</span> · <span className="hover:underline" onClick={() => {
             router.push(`/pagina/${formatText(by)}`)
           }}>{by}</span> · <span>{on}</span></p>
           </li>
