@@ -31,7 +31,7 @@ const Home = ({ newsFetched }) => {
 };
 
 export async function getServerSideProps() {
-  const responseNews = await findNewsHook({
+  const { data } = await findNewsHook({
     title: undefined,
     titleSlug: undefined,
     by: undefined,
@@ -42,7 +42,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      newsFetched: responseNews
+      newsFetched: data
     }
   }
 }
