@@ -5,7 +5,7 @@ import Layout from "../../../components/Layout"
 import formatText from "../../../lib/hooks/formatText"
 import findNewsHook from "../../../lib/db/findNews";
 
-export default function username() {
+export default function username({ newsFetched }) {
   const router = useRouter()
   const { username } = router.query
 
