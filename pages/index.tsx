@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { formatDistance } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'; 
+import findNewsHook from "../../../../lib/db/findNews";
 
 const Home = ({ newsFetched }) => {
   const router = useRouter()
@@ -30,7 +31,7 @@ const Home = ({ newsFetched }) => {
 };
 
 export async function getServerSideProps() {
-  const responseNews = await axios.post("/api/v1/db/findNews")
+  const responseNews = await findNewsHook({});
 
   return {
     props: {
