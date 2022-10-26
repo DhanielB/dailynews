@@ -68,7 +68,7 @@ export default function Publicar() {
 
   useEffect(() => {
     setEmail(user?.email);
-  }, [user]);
+  }, [user])
 
   return (
     <Layout>
