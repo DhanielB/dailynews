@@ -47,19 +47,21 @@ export default function Header() {
         Recentes
       </a>
       {user?.email ? (
-        <a onClick={() => {
-          setLokingAt('cadastro')
-          router.push('/cadastro')
-        }} className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute">
-          Cadastrar
-        </a>
+        <div>
+          <a onClick={() => {
+            setLokingAt('cadastro')
+            router.push('/cadastro')
+          }} className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute">
+            Cadastrar
+          </a>
 
-        <a onClick={() => {
-          setLokingAt('login')
-          router.push('/login')
-        }} className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute">
-          Login
-        </a>
+          <a onClick={() => {
+            setLokingAt('login')
+            router.push('/login')
+          }} className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute">
+            Login
+          </a>
+        </div>
       ) : null}
 
       <style jsx>{`
