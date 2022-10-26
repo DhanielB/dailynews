@@ -6,6 +6,9 @@ import formatText from "../../../lib/hooks/formatText"
 import findNewsHook from "../../../lib/db/findNews";
 
 export default function username() {
+  const router = useRouter()
+  const { username } = router.query
+
   return (
     <Layout>
       <div>
