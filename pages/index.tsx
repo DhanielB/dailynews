@@ -29,7 +29,7 @@ const Home = ({ newsFetched }) => {
   );
 };
 
-export async function getServerSide() {
+export async function getServerSideProps() {
   const responseNews = await axios.post("/api/v1/db/findNews")
 
   return {
