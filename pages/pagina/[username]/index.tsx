@@ -3,25 +3,9 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Layout from "../../../components/Layout"
 import formatText from "../../../lib/hooks/formatText"
+import findNewsHook from "../lib/db/findNews";
 
 export default function username() {
-  const router = useRouter()
-
-  const { username } = router.query
-  const [newsFetched, setNewsFetched] = useState([])
-
-  async function handleInit() {
-    const responseNews = await axios.post("/api/v1/db/findNews", {
-      by: username
-    })
-
-    setNewsFetched(responseNews.data.data)
-  }
-
-  useEffect(() => {
-    handleInit()
-  }, [])
-
   return (
     <Layout>
       <div>
@@ -44,4 +28,24 @@ export default function username() {
       })}</ul>
     </Layout>
   )
+}
+
+export async function getServerSideProps() {
+  const router = useRouter()
+  const { username } = router.query
+
+  const { data } = await findNewsHook({
+    title: undefined,
+    titleSlug: undefined,
+    by: username,
+    slug: undefined,
+    sourceUrl: undefined,
+    content: undefined
+   });
+  
+   return {
+     props: {
+       newsFetched: data
+     }
+   }
 }
