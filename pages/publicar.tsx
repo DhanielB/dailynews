@@ -42,6 +42,7 @@ export default function Publicar() {
         if (responsePublish.status == 200) {
           Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
         }
+      }
     }
   }
 
