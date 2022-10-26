@@ -28,6 +28,7 @@ export default function Publicar() {
   const [content, setContent] = useState("");
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
+  const [canPublish, setCanPublish] = useState(true)
 
   const bytemdPluginList = [
     gfmPlugin({ locale: gfmLocale }),
@@ -41,24 +42,27 @@ export default function Publicar() {
   async function handlePublish(event) {
     event.preventDefault();
 
-    const responseUser = await axios.post("/api/v1/db/findUser", {
-      email: email,
-    });
+    if(canPublish) {
+      setCanPublish(false)
 
-    if (responseUser.data?.data.length > 0) {
-      const by = responseUser.data?.data[0]?.name;
-
-      const responsePublish = await axios.post("/api/v1/db/createNews", {
-        title: title,
-        by: by,
-        slug: `/pagina/${formatText(by)}/${formatText(title)}`,
-        sourceUrl: source,
-        content: content,
+      const responseUser = await axios.post("/api/v1/db/findUser", {
+        email: email,
       });
 
-      if (responsePublish.status == 200) {
-        Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
-      }
+      if (responseUser.data?.data.length > 0) {
+        const by = responseUser.data?.data[0]?.name;
+
+        const responsePublish = await axios.post("/api/v1/db/createNews", {
+          title: title,
+          by: by,
+          slug: `/pagina/${formatText(by)}/${formatText(title)}`,
+          sourceUrl: source,
+          content: content,
+        });
+
+        if (responsePublish.status == 200) {
+          Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
+        }
     }
   }
 
