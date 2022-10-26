@@ -5,7 +5,7 @@ import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { formatDistance } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'; 
-import findNewsHook from "../../../../lib/db/findNews";
+import findNewsHook from "../lib/db/findNews";
 
 const Home = ({ newsFetched }) => {
   const router = useRouter()
