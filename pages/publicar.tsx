@@ -51,30 +51,31 @@ export default function Publicar() {
 
   return (
     <Layout>
-      <h1 className="font-semibold text-[2rem] mt-[1.5rem] ml-[1.625rem] md:text-[2rem] md:mt-[1.5rem] md:ml-[1.625rem]">
-        Publicar novo conteúdo
-      </h1>
+      <form onSubmit={handlePublish}>
+        <h1 className="font-semibold text-[2rem] mt-[1.5rem] ml-[1.625rem] md:text-[2rem] md:mt-[1.5rem] md:ml-[1.625rem]">
+          Publicar novo conteúdo
+        </h1>
 
-      <input
-        onChange={(e) => {
-          setTitle(e.currentTarget.value);
-        }}
-        className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
-        placeholder="Título"
-      ></input>
+        <input
+          onChange={(e) => {
+            setTitle(e.currentTarget.value);
+          }}
+          className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
+          placeholder="Título"
+        ></input>
 
-      <div>
-        {mode == "view" ? (
-          <div className="flex flex-col overflow-auto">
-            <ReactMarkdown className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute">{content}</ReactMarkdown>
-          </div>
-        ) : (
-          <div>
-            <textarea
-            className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
-              onChange={(e) => {
-                setContent(e.currentTarget.value);
-              }}
+        <div>
+          {mode == "view" ? (
+            <div className="flex flex-col overflow-auto">
+              <ReactMarkdown className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute">{content}</ReactMarkdown>
+            </div>
+          ) : (
+            <div>
+              <textarea
+              className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
+                onChange={(e) => {
+                  setContent(e.currentTarget.value);
+                }}
               defaultValue={content}
               value={content}
             ></textarea>
@@ -126,6 +127,7 @@ export default function Publicar() {
           ${mode == "write" ? "color: RoyalBlue;" : null}
         }
       `}</style>
+     </form>
     </Layout>
   );
 }
