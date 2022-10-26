@@ -1,8 +1,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useUser } from "../lib/hooks/useUser"
 
 export default function Header() {
   const router = useRouter()
+  const user = useUser({})
+
   const [lookingAt, setLokingAt] = useState('relevant');
 
   return (
@@ -43,18 +46,21 @@ export default function Header() {
       }} className="recent text-white font-[600] top-[1.225rem] left-[8.5rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:left-[14.4rem] absolute">
         Recentes
       </a>
-      <a onClick={() => {
-        setLokingAt('cadastro')
-        router.push('/cadastro')
-      }} className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute">
-        Cadastrar
-      </a>
-      <a onClick={() => {
-        setLokingAt('login')
-        router.push('/login')
-      }} className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute">
-        Login
-      </a>
+      {user?.email ? (
+        <a onClick={() => {
+          setLokingAt('cadastro')
+          router.push('/cadastro')
+        }} className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute">
+          Cadastrar
+        </a>
+
+        <a onClick={() => {
+          setLokingAt('login')
+          router.push('/login')
+        }} className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute">
+          Login
+        </a>
+      ) : null}
 
       <style jsx>{`
         a {
