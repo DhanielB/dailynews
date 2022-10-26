@@ -6,21 +6,9 @@ import formatText from "../lib/hooks/formatText";
 import { formatDistance } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'; 
 
-const Home = () => {
+const Home = ({ newsFetched }) => {
   const router = useRouter()
-  
-  const [newsFetched, setNewsFetched] = useState([])
 
-  async function handleInit() {
-    const responseNews = await axios.post("/api/v1/db/findNews")
-
-    setNewsFetched(responseNews.data.data)
-  }
-
-  useEffect(() => {
-    handleInit()
-  }, [])
-  
   return (
     <Layout>
       <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">{newsFetched.map((news, newsCounted) => {
@@ -40,5 +28,15 @@ const Home = () => {
     </Layout>
   );
 };
+
+export async function getServerSide() {
+  const responseNews = await axios.post("/api/v1/db/findNews")
+
+  return {
+    props: {
+      newsFetched: responseNews
+    }
+  }
+}
 
 export default Home;
