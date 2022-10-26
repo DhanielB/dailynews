@@ -7,7 +7,7 @@ import "bytemd/dist/index.min.css";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
-import findNewsHook from "../lib/db/findNews";
+import findNewsHook from "../../../lib/db/findNews";
 
 export default function username({ newsFetched }) {
   return (
