@@ -4,20 +4,8 @@ import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { useUser } from "../lib/hooks/useUser";
 import Router from "next/router";
-import { Viewer, Editor } from "@bytemd/react";
-import gfmPlugin from "@bytemd/plugin-gfm";
-import highlightSsrPlugin from "@bytemd/plugin-highlight-ssr";
-import mermaidPlugin from "@bytemd/plugin-mermaid";
-import breaksPlugin from "@bytemd/plugin-breaks";
-import gemojiPlugin from "@bytemd/plugin-gemoji";
-import byteMDLocale from "bytemd/locales/pt_BR.json";
-import gfmLocale from "@bytemd/plugin-gfm/locales/pt_BR.json";
-import mermaidLocale from "@bytemd/plugin-mermaid/locales/pt_BR.json";
-import "bytemd/dist/index.min.css";
-import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
-import math from '@bytemd/plugin-math'
 import ReactMarkdown from 'react-markdown'
 
 export default function Publicar() {
@@ -29,15 +17,6 @@ export default function Publicar() {
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
   const [canPublish, setCanPublish] = useState(true)
-
-  const bytemdPluginList = [
-    gfmPlugin({ locale: gfmLocale }),
-    highlightSsrPlugin(),
-    mermaidPlugin({ locale: mermaidLocale }),
-    breaksPlugin(),
-    gemojiPlugin(),
-    math(),
-  ];
 
   async function handlePublish(event) {
     event.preventDefault();
