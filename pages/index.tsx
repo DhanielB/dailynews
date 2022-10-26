@@ -31,7 +31,14 @@ const Home = ({ newsFetched }) => {
 };
 
 export async function getServerSideProps() {
-  const responseNews = await findNewsHook({});
+  const responseNews = await findNewsHook({
+    title: undefined,
+    titleSlug: undefined,
+    by: undefined,
+    slug: undefined,
+    sourceUrl: undefined,
+    content: undefined
+  });
 
   return {
     props: {
