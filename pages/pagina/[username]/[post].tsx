@@ -30,9 +30,8 @@ export default function username({ newsFetched }) {
   )
 }
 
-export async function getServerSideProps() {
-  const router = useRouter()
-  const { username, post } = router.query
+export async function getServerSideProps({ req, res }) {
+  const { username, post } = req.query
 
   const { data } = await findNewsHook({
     title: undefined,
