@@ -10,6 +10,9 @@ import "github-markdown-css/github-markdown-light.css";
 import findNewsHook from "../../../lib/db/findNews";
 
 export default function username({ newsFetched }) {
+  const router = useRouter()
+  const { username, post } = router.query
+
   return (
     <Layout>
       {newsFetched.map((news) => {
