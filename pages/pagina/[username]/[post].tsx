@@ -7,26 +7,9 @@ import "bytemd/dist/index.min.css";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
+import findNewsHook from "../lib/db/findNews";
 
-export default function username() {
-  const router = useRouter()
-  const { username, post } = router.query
-
-  const [newsFetched, setNewsFetched] = useState([])
-
-  async function handleInit() {
-    const responseNews = await axios.post("/api/v1/db/findNews", {
-      by: username,
-      titleSlug: post
-    })
-
-    setNewsFetched(responseNews.data.data)
-  }
-
-  useEffect(() => {
-    handleInit()
-  }, [])
-  
+export default function username({ newsFetched }) {
   return (
     <Layout>
       {newsFetched.map((news) => {
@@ -43,3 +26,22 @@ export default function username() {
     </Layout>
   )
 }
+
+export async function getServerSideProps() {
+  const router = useRouter()
+  const { username, post } = router.query
+
+  const { data } = await findNewsHook({
+    title: undefined,
+    titleSlug: post,
+    by: username,
+    slug: undefined,
+    sourceUrl: undefined,
+    content: undefined
+  });
+  
+  return {
+    props: {
+      newsFetched: data
+    }
+  }}
