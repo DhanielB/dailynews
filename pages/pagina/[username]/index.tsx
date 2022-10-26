@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Layout from "../../../components/Layout"
 import formatText from "../../../lib/hooks/formatText"
-import findNewsHook from "../lib/db/findNews";
+import findNewsHook from "../../../lib/db/findNews";
 
 export default function username() {
   return (
