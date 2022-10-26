@@ -36,8 +36,8 @@ export async function getServerSideProps() {
 
   const { data } = await findNewsHook({
     title: undefined,
-    titleSlug: post,
-    by: username,
+    titleSlug: post.toString(),
+    by: username.toString(),
     slug: undefined,
     sourceUrl: undefined,
     content: undefined
