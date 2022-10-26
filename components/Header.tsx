@@ -46,7 +46,7 @@ export default function Header() {
       }} className="recent text-white font-[600] top-[1.225rem] left-[8.5rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:left-[14.4rem] absolute">
         Recentes
       </a>
-      {user?.email ? (
+      {user?.email !== undefined ? (
         <div>
           <a onClick={() => {
             setLokingAt('cadastro')
