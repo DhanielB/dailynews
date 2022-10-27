@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "katex": "*",
     "remark-math": "*",
     "rehype-katex": "*",
     "@bytemd/plugin-breaks": "^1.17.4",
