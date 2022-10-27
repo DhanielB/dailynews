@@ -70,22 +70,7 @@ export default function Header() {
             Login
           </a>
         </div>
-      ) : (
-        <div onClick={() => {
-          setMenuVisible(state => !state)
-        }} className="cursor-pointer w-8 h-8 px-2 py-2 bg-white rounded-md top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1rem] md:right-[4rem] absolute">
-          <User size={16}></User>
-
-          {menuVisible ? (
-            <div className="w-36 h-24 bg-gray-200 border rounded-md md:top-[2rem] md:right-[4rem] z-50 absolute">
-              <button onClick={() => {
-                router.push("/publicar")
-              }} className="cursor-pointer w-36 h-8 text-[0.8rem] border-b border-black border-opacity-20">Publicar Contéudo</button>
-              <button onClick={handleLogout} className="cursor-pointer w-36 h-8 text-red-500 text-[0.8rem]">Sair Da Conta</button>
-            </div>
-          ) : null}
-        </div>
-      )}
+      ) : null}
 
       <style jsx>{`
         a {
