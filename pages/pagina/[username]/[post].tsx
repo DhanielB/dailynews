@@ -2,7 +2,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Layout from "../../../components/Layout"
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from '../../../components/Markdown'
 import "bytemd/dist/index.min.css";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
