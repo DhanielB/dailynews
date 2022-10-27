@@ -77,7 +77,7 @@ export default function Header() {
           <User size={16}></User>
 
           {menuVisible ? (
-            <div className="w-36 h-24 bg-gray-200 border rounded-md md:top-[2rem] md:right-[0rem] z-50 absolute">
+            <div className="w-36 h-24 bg-gray-200 border rounded-md md:top-[2rem] md:right-[4rem] z-50 absolute">
               <button onClick={() => {
                 router.push("/publicar")
               }} className="cursor-pointer w-36 h-8 text-[0.8rem] border-b border-black border-opacity-20">Publicar Contéudo</button>
