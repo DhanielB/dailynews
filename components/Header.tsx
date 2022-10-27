@@ -9,7 +9,7 @@ export default function Header() {
   const user = useUser({})
 
   const [lookingAt, setLokingAt] = useState('relevant');
-  const [menuVisible, setMenuVisible] = useState(true)
+  const [menuVisible, setMenuVisible] = useState(false)
 
   async function handleLogout() {
     await axios.post("/api/v1/auth/logout")
@@ -40,7 +40,7 @@ export default function Header() {
         </svg>
       </div>
       <a className="hidden text-white font-[600] md:flex md:text-[0.900rem] md:top-[1.5rem] md:left-[3.5rem] absolute">
-        DailyNews
+        DailyQuestions
       </a>
       <a onClick={() => {
         setLokingAt('relevant')
