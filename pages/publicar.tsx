@@ -6,7 +6,7 @@ import { useUser } from "../lib/hooks/useUser";
 import Router from "next/router";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from '../components/Markdown'
 
 export default function Publicar() {
   const user = useUser({ redirectTo: "/cadastro" });
