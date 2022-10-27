@@ -40,7 +40,7 @@ export default function Header() {
         </svg>
       </div>
       <a className="hidden text-white font-[600] md:flex md:text-[0.900rem] md:top-[1.5rem] md:left-[3.5rem] absolute">
-        DailyQuestions
+        DailyNews
       </a>
       <a onClick={() => {
         setLokingAt('relevant')
