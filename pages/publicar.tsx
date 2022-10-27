@@ -55,7 +55,6 @@ export default function Publicar() {
 
   return (
     <Layout>
-      <form>
         <h1 className="font-semibold text-[2rem] mt-[1.5rem] ml-[1.625rem] md:text-[2rem] md:mt-[1.5rem] md:ml-[1.625rem]">
           Publicar novo conteúdo
         </h1>
@@ -132,7 +131,6 @@ export default function Publicar() {
           ${mode == "write" ? "color: RoyalBlue;" : null}
         }
       `}</style>
-     </form>
     </Layout>
   );
 }
