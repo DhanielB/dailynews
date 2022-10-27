@@ -68,7 +68,7 @@ export default function Publicar() {
         <div>
           {mode == "view" ? (
             <div className="flex flex-col overflow-auto">
-              <ReactMarkdown source={content} className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"/>
+              <ReactMarkdown source={content}/>
             </div>
           ) : (
             <div>
