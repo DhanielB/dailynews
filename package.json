@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "remark-math": "*",
-    "react-mathjax": "*",
+    "react-katex": "*",
+    "katex": "*",
     "@bytemd/plugin-breaks": "^1.17.4",
     "@bytemd/plugin-gemoji": "^1.17.4",
     "@bytemd/plugin-gfm": "^1.17.4",
