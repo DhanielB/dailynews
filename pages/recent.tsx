@@ -7,7 +7,7 @@ import { formatDistance } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'; 
 import findNewsHook from "../lib/db/findNews";
 
-const Home = ({ newsFetched }) => {
+const Recent = ({ newsFetched }) => {
   const router = useRouter()
 
   return (
@@ -47,4 +47,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default Home;
+export default Recent;

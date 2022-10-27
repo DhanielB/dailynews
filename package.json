@@ -6,12 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
-    "date-fns": "*",
-    "@bytemd/plugin-math": "*",
     "@bytemd/plugin-breaks": "^1.17.4",
     "@bytemd/plugin-gemoji": "^1.17.4",
     "@bytemd/plugin-gfm": "^1.17.4",
     "@bytemd/plugin-highlight-ssr": "^1.17.4",
+    "@bytemd/plugin-math": "*",
     "@bytemd/plugin-mermaid": "^1.17.4",
     "@bytemd/react": "^1.17.4",
     "@hapi/iron": "6.0.0",
@@ -23,6 +22,7 @@
     "axios": "^0.27.2",
     "codemirror-ssr": "^0.65.0",
     "cookie": "0.4.0",
+    "date-fns": "*",
     "github-markdown-css": "^5.1.0",
     "global": "^4.4.0",
     "magic-sdk": "1.0.1",
