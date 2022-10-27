@@ -21,7 +21,7 @@ export default function username({ newsFetched }) {
         if(by == username && titleSlug == post) {
           return (
             <div className="p-[1rem]">
-              <ReactMarkdown children={`# ${title} - ${by}\n${content}`} className="markdown-body"/>
+              <ReactMarkdown source={`# ${title} - ${by}\n${content}`} className="markdown-body"/>
             </div>
           )
         }
