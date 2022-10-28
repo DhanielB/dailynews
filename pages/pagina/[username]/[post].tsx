@@ -22,7 +22,7 @@ export default function username({ newsFetched }) {
   return (
     <Layout>
       {newsFetched.map((news) => {
-        const { title, titleSlug, by, content } = news
+        const { title, titleSlug, by, content, source } = news
         
         if(by == username && titleSlug == post) {
           return (
@@ -30,7 +30,7 @@ export default function username({ newsFetched }) {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex]}
-                children={`# ${title} - ${by}\n${content}`}
+                children={`# ${title} - ${by}\n${content}\n\n### ${source}`}
                 className="markdown-body"/>
             </div>
           )
