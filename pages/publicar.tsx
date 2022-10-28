@@ -23,6 +23,24 @@ export default function Publicar() {
   const [email, setEmail] = useState("");
   const [canPublish, setCanPublish] = useState(true)
 
+  useEffect(() => {
+    setTitle(window.localStorage.getItem('title'));
+    setContent(window.localStorage.getItem('content'))
+    setSource(window.localStorage.getItem('source'))
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('title', title);
+  }, [title]);
+
+  useEffect(() => {
+    window.localStorage.setItem('content', content);
+  }, [content]);
+
+  useEffect(() => {
+    window.localStorage.setItem('source', source);
+  }, [source]);
+
   async function handlePublish(event) {
     event.preventDefault();
 
