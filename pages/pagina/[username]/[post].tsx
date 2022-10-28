@@ -9,8 +9,9 @@ import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
 import findNewsHook from "../../../lib/db/findNews";
 import ReactMarkdown from 'react-markdown'
-import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
 
 import 'katex/dist/katex.min.css'
 
@@ -27,7 +28,7 @@ export default function username({ newsFetched }) {
           return (
             <div className="p-[1rem]">
               <ReactMarkdown
-                remarkPlugins={[remarkMath]}
+                remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex]}
                 children={`# ${title} - ${by}\n${content}`}
                 className="markdown-body"/>
