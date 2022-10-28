@@ -11,6 +11,7 @@ import findNewsHook from "../../../lib/db/findNews";
 import ReactMarkdown from 'react-markdown'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from "rehype-raw";
 import remarkMath from 'remark-math'
 
 import 'katex/dist/katex.min.css'
@@ -29,7 +30,7 @@ export default function username({ newsFetched }) {
             <div className="p-[1rem]">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex]}
+                rehypePlugins={[rehypeKatex, rehypeRaw]}
                 children={`# ${title} - ${by}\n${content}\n\n### ${sourceUrl || ''}`}
                 className="markdown-body"/>
             </div>
