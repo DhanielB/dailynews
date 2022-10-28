@@ -30,7 +30,7 @@ export default function username({ newsFetched }) {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex]}
-                children={`# ${title} - ${by}\n${content}\n\n### ${sourceUrl || '}`}
+                children={`# ${title} - ${by}\n${content}\n\n### ${sourceUrl || ''}`}
                 className="markdown-body"/>
             </div>
           )
