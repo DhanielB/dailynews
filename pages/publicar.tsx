@@ -66,6 +66,7 @@ export default function Publicar() {
           }}
           className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
           placeholder="Título"
+          required={true}
         ></input>
 
         <div>
@@ -83,6 +84,7 @@ export default function Publicar() {
                 }}
               defaultValue={content}
               value={content}
+              required={true}
             ></textarea>
           </div>
         )}
