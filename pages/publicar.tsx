@@ -85,6 +85,8 @@ export default function Publicar() {
           }}
           className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
           placeholder="Título"
+          defaultValue={title}
+          value={title}
           required={true}
         ></input>
 
@@ -130,6 +132,8 @@ export default function Publicar() {
         onChange={(e) => {
           setSource(e.currentTarget.value);
         }}
+        defaultValue={source}
+        value={source}
         className="px-4 py-[0.5rem] top-[28.75rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[28.75rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
         placeholder="Fonte (Opicional)"
       ></input>
