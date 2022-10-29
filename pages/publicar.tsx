@@ -63,6 +63,10 @@ export default function Publicar() {
         });
 
         if (responsePublish.status == 200) {
+          window.localStorage.setItem('title', '')
+          window.localStorage.setItem('content', '')
+          window.localStorage.setItem('source', '')
+
           Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
         }
       }
