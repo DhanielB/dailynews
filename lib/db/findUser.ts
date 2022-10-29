@@ -3,7 +3,7 @@ import filterObject from "../hooks/filterObject";
 
 export default async function findUser({
   name,
-  email
+  email,
 }: {
   name?: string;
   email?: string;
@@ -12,14 +12,13 @@ export default async function findUser({
   await prisma.$connect();
 
   const users = await prisma.users.findMany({
-  //@ts-ignore
+    //@ts-ignore
     where: filterObject({
       name: name,
-      email: email
-    })
+      email: email,
+    }),
   });
 
-  
   await prisma.$disconnect();
 
   return {

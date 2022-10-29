@@ -13,7 +13,7 @@ export default async function findNews(
     by: by,
     slug: slug,
     sourceUrl: sourceUrl,
-    content: content
+    content: content,
   });
 
   res.status(200).json(data);

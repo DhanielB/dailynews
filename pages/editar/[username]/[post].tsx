@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Layout from "../components/Layout";
-import formatText from "../lib/hooks/formatText";
-import { useUser } from "../lib/hooks/useUser";
+import Layout from "../../../components/Layout";
+import formatText from "../../../lib/hooks/formatText";
+import { useUser } from "../../../lib/hooks/useUser";
 import Router from "next/router";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
@@ -44,7 +44,7 @@ export default function Publicar() {
   async function handlePublish(event) {
     event.preventDefault();
 
-    if (canPublish && title != "" && content.length > 50) {
+    if (canPublish) {
       setCanPublish(false);
 
       const responseUser = await axios.post("/api/v1/db/findUser", {

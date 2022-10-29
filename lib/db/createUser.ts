@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 export default async function createUser({
   name,
-  email
+  email,
 }: {
   name: string;
   email: string;
@@ -14,11 +14,10 @@ export default async function createUser({
     data: {
       name: name,
       email: email,
-      createdAt: Date.now()
-    }
+      createdAt: Date.now(),
+    },
   });
 
-  
   await prisma.$disconnect();
 
   return {

@@ -1,26 +1,22 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useUser } from "../lib/hooks/useUser"
-import { User } from "phosphor-react"
+import { useUser } from "../lib/hooks/useUser";
 import axios from "axios";
 
 export default function Header() {
-  const router = useRouter()
-  const user = useUser({})
+  const router = useRouter();
+  const user = useUser({});
 
-  const [lookingAt, setLokingAt] = useState('relevant');
-  const [menuVisible, setMenuVisible] = useState(false)
-
-  async function handleLogout() {
-    await axios.post("/api/v1/auth/logout")
-    router.push("/")
-  }
+  const [lookingAt, setLokingAt] = useState("relevant");
 
   return (
     <div className="w-screen h-16 bg-[#23292f] absolute">
-      <div onClick={() => {
-        router.push('/')
-      }} className="left-[0.5rem] top-[1.125rem] md:left-[1rem] md:top-[1.125rem] absolute">
+      <div
+        onClick={() => {
+          router.push("/");
+        }}
+        className="left-[0.5rem] top-[1.125rem] md:left-[1rem] md:top-[1.125rem] absolute"
+      >
         <svg
           className="hover:opacity-60"
           stroke="#ffffff"
@@ -42,31 +38,43 @@ export default function Header() {
       <a className="hidden text-white font-[600] md:flex md:text-[0.900rem] md:top-[1.5rem] md:left-[3.5rem] absolute">
         DailyNews
       </a>
-      <a onClick={() => {
-        setLokingAt('relevant')
-        router.push('/')
-      }} className="relevant text-white font-[600] top-[1.225rem] left-[3.5rem] text-[0.875rem] md:text-[0.9rem] md:top-[1.5rem] md:left-[8.95rem] absolute">
+      <a
+        onClick={() => {
+          setLokingAt("relevant");
+          router.push("/");
+        }}
+        className="relevant text-white font-[600] top-[1.225rem] left-[3.5rem] text-[0.875rem] md:text-[0.9rem] md:top-[1.5rem] md:left-[8.95rem] absolute"
+      >
         Relevantes
       </a>
-      <a onClick={() => {
-        setLokingAt('recent')
-        router.push('/recent')
-      }} className="recent text-white font-[600] top-[1.225rem] left-[8.5rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:left-[14.4rem] absolute">
+      <a
+        onClick={() => {
+          setLokingAt("recent");
+          router.push("/recent");
+        }}
+        className="recent text-white font-[600] top-[1.225rem] left-[8.5rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:left-[14.4rem] absolute"
+      >
         Recentes
       </a>
-      {user?.email === undefined ?  (
+      {user?.email === undefined ? (
         <div>
-          <a onClick={() => {
-            setLokingAt('cadastro')
-            router.push('/cadastro')
-          }} className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute">
+          <a
+            onClick={() => {
+              setLokingAt("cadastro");
+              router.push("/cadastro");
+            }}
+            className="text-white font-[600] top-[1.225rem] right-[1.225rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[3rem] absolute"
+          >
             Cadastrar
           </a>
 
-          <a onClick={() => {
-            setLokingAt('login')
-            router.push('/login')
-          }} className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute">
+          <a
+            onClick={() => {
+              setLokingAt("login");
+              router.push("/login");
+            }}
+            className=" text-white font-[600] top-[1.225rem] right-[5.725rem] text-[0.875rem] md:text-[0.900rem] md:top-[1.5rem] md:right-[8rem] absolute"
+          >
             Login
           </a>
         </div>
@@ -78,16 +86,16 @@ export default function Header() {
         }
 
         a:hover {
-          color: #9CA3AF;
-          border-color: #9CA3AF;
+          color: #9ca3af;
+          border-color: #9ca3af;
         }
 
         .recent {
-          ${lookingAt == 'recent' ? "border-bottom-width: 1px;" : null}
+          ${lookingAt == "recent" ? "border-bottom-width: 1px;" : null}
         }
 
         .relevant {
-          ${lookingAt == 'relevant' ? "border-bottom-width: 1px;" : null}
+          ${lookingAt == "relevant" ? "border-bottom-width: 1px;" : null}
         }
       `}</style>
     </div>

@@ -1,14 +1,15 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import createNewsHook from "../../../../lib/db/createNews";
+import deleteNewsHook from "../../../../lib/db/deleteNews";
 
-export default async function createNews(
+export default async function deleteNews(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, by, slug, sourceUrl, content } = req.body;
+  const { title, titleSlug, by, slug, sourceUrl, content } = req.body;
 
-  const data = await createNewsHook({
+  const data = await deleteNewsHook({
     title: title,
+    titleSlug: titleSlug,
     by: by,
     slug: slug,
     sourceUrl: sourceUrl,

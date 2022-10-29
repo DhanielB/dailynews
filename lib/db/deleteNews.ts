@@ -1,14 +1,16 @@
 import { PrismaClient } from "@prisma/client";
-import formatText from "../hooks/formatText";
+import filterObject from "../hooks/filterObject";
 
-export default async function createNews({
+export default async function deleteNews({
   title,
+  titleSlug,
   by,
   slug,
   sourceUrl,
   content,
 }: {
   title: string;
+  titleSlug: string;
   by: string;
   slug: string;
   sourceUrl: string;
@@ -17,18 +19,16 @@ export default async function createNews({
   const prisma = new PrismaClient();
   await prisma.$connect();
 
-  const news = await prisma.news.create({
-    data: {
+  const news = await prisma.news.delete({
+    //@ts-ignore
+    where: filterObject({
       title: title,
-      titleSlug: formatText(title),
-      commentCount: 0,
+      titleSlug: titleSlug,
       by: by,
       slug: slug,
       sourceUrl: sourceUrl,
       content: content,
-      editedAt: Date.now(),
-      createdAt: Date.now(),
-    },
+    }),
   });
 
   await prisma.$disconnect();
