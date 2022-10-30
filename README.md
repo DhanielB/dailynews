@@ -1,3 +1,3 @@
 # Daily News
 
-Simple, Fast, open to all ## 🐶
+Simple, Fast, open to all **🐶**
