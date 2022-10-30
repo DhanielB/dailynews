@@ -12,6 +12,7 @@
     "remark-gfm": "*",
     "rehype-katex": "*",
     "@hapi/iron": "*",
+    "highlight.js": "*",
     "@prisma/client": "^4.5.0",
     "@types/node": "^18.11.0",
     "axios": "^0.27.2",
