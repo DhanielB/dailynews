@@ -1,3 +1,3 @@
 # Daily News
 
-Simple, Fast, and with all
+Simple, Fast, open to all 
