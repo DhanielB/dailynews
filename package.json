@@ -12,6 +12,8 @@
     "remark-gfm": "*",
     "rehype-katex": "*",
     "@hapi/iron": "*",
+    "@magic-sdk/admin": "*",
+    "bytemd": "*",
     "highlight.js": "*",
     "@prisma/client": "^4.5.0",
     "@types/node": "^18.11.0",
