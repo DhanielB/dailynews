@@ -56,7 +56,7 @@ export default function username({ newsFetched }) {
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeRaw]}
                 children={`# ${title}\n${content}\n\n### ${sourceUrl || ""}`}
-                className="markdown-body w-screen break-all"
+                className="markdown-body w-screen break-all pr-[1rem]"
               />
             </div>
           );
