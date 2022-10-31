@@ -10,7 +10,7 @@ export default function Header() {
   const [lookingAt, setLokingAt] = useState("relevant");
 
   return (
-    <div className="w-screen h-16 bg-[#23292f] absolute">
+    <div className="w-full h-16 bg-[#23292f] absolute">
       <div
         onClick={() => {
           router.push("/");
