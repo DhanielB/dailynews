@@ -56,7 +56,7 @@ export default function username({ newsFetched }) {
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeRaw]}
                 children={`# ${title}\n${content}\n\n### ${sourceUrl || ""}`}
-                className="markdown-body pt-[1.5rem] break-words box-border w-screen"
+                className="markdown-body w-screen"
               />
             </div>
           );
