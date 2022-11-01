@@ -34,7 +34,7 @@ export default function username({ newsFetched }) {
 
         if (by == username && titleSlug == post) {
           return (
-            <div className="p-[1rem]">
+            <div>
               { /* @ts-ignore */ }
               <code className="bg-blue-300 text-blue-500 rounded-md px-1 py-[0.5rem] ml-4 mt-6">
                 {username}
