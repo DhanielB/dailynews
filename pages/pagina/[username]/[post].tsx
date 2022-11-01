@@ -34,7 +34,7 @@ export default function username({ newsFetched }) {
 
         if (by == username && titleSlug == post) {
           return (
-            <div>
+            <div className="p-[1rem]">
               { /* @ts-ignore */ }
               <code className="bg-blue-300 text-blue-500 rounded-md px-1 py-[0.5rem] ml-4 mt-6">
                 {username}
@@ -56,7 +56,7 @@ export default function username({ newsFetched }) {
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeRaw]}
                 children={`# ${title}\n${content}\n\n### ${sourceUrl || ""}`}
-                className="markdown-body w-screen break-all"
+                className="markdown-body w-[calc(screen-2rem)] break-all"
               />
             </div>
           );
