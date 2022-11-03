@@ -84,7 +84,9 @@ export default function Publicar() {
     };
 
     for(let index = 0; index <= files.length - 1; index++) {
-      fileReader.readAsDataURL(files[index]);
+      if(((files[index].size/1024)/1024).toFixed(4) <= 5) {
+        fileReader.readAsDataURL(files[index]);
+      }
     }
   }
 
