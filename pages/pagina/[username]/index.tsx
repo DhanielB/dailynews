@@ -3,6 +3,7 @@ import Layout from "../../../components/Layout";
 import formatText from "../../../lib/hooks/formatText";
 import findNewsHook from "../../../lib/db/findNews";
 import { formatDistance } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
 
 export default function username({ newsFetched }) {
   const router = useRouter();
