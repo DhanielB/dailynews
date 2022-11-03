@@ -81,7 +81,7 @@ export default function Publicar() {
       const fileContent = e.target.result;
       const blob = new Blob([fileContent])
 
-      setContent((state) => `${state}\n![](${blob})`);
+      setContent((state) => `${state}\n![](${blob[0]})`);
     };
 
     for(let index = 0; index <= files.length - 1; index++) {
