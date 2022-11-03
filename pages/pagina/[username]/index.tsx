@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
 import formatText from "../../../lib/hooks/formatText";
 import findNewsHook from "../../../lib/db/findNews";
+import { formatDistance } from "date-fns";
 
 export default function username({ newsFetched }) {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function username({ newsFetched }) {
 
       <ul className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:top-[10rem] md:left-[10rem] absolute">
         {newsFetched.map((news, index) => {
-          const { title, comment, by, on } = news;
+          const { title, comment, by, on, createdAt } = news;
 
           return (
             <li
@@ -42,7 +43,7 @@ export default function username({ newsFetched }) {
                 >
                   {by}
                 </span>{" "}
-                · <span>{on}</span>
+                · <span>{on}</span>{" "} · <span> Há {formatDistance(Date.now(), createdAt, { locale: ptBR })} </span>
               </p>
             </li>
           );
