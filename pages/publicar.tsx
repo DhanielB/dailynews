@@ -79,7 +79,7 @@ export default function Publicar() {
 
     fileReader.onload = async (e) => {
       const fileContent = e.target.result;
-      const blob = new Blob([fileContent], { type: 'text/plain' })
+      const blob = await (await fetch(fileContent.toString())).blob();
 
       setContent((state) => `${state}\n![](${blob})`);
     };
