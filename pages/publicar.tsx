@@ -81,7 +81,7 @@ export default function Publicar() {
       const fileContent = e.target.result;
       let blob = await fetch(fileContent.toString()).then(r => r.blob())
 
-      alert(blob)
+      alert(JSON.stringify(blob))
       setContent((state) => `${state}\n![](${blob})`);
     };
 
