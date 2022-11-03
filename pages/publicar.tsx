@@ -79,7 +79,7 @@ export default function Publicar() {
 
     fileReader.onload = (e) => {
       const fileContent = e.target.result;
-      const blob = new Blob([fileContent])
+      const blob = new Blob(fileContent)
 
       setContent((state) => `${state}\n![](${blob})`);
     };
