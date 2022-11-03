@@ -14,7 +14,7 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 
 export default function Publicar() {
-  //const user = useUser({ redirectTo: "/cadastro" });
+  const user = useUser({ redirectTo: "/cadastro" });
 
   const [mode, setMode] = useState("write");
   const [title, setTitle] = useState("");
@@ -88,9 +88,9 @@ export default function Publicar() {
     }
   }
 
-  //useEffect(() => {
-  //  setEmail(user?.email);
-  //}, [user]);
+  useEffect(() => {
+    setEmail(user?.email);
+  }, [user]);
 
   return (
     <Layout>
