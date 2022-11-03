@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { useUser } from "../lib/hooks/useUser";
@@ -14,7 +14,7 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 
 export default function Publicar() {
-  const user = useUser({ redirectTo: "/cadastro" });
+  //const user = useUser({ redirectTo: "/cadastro" });
 
   const [mode, setMode] = useState("write");
   const [title, setTitle] = useState("");
@@ -30,15 +30,15 @@ export default function Publicar() {
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("title", title);
+    window.localStorage.setItem("title", title || '');
   }, [title]);
 
   useEffect(() => {
-    window.localStorage.setItem("content", content);
+    window.localStorage.setItem("content", content || '');
   }, [content]);
 
   useEffect(() => {
-    window.localStorage.setItem("source", source);
+    window.localStorage.setItem("source", source || '');
   }, [source]);
 
   async function handlePublish(event) {
@@ -73,9 +73,24 @@ export default function Publicar() {
     }
   }
 
-  useEffect(() => {
-    setEmail(user?.email);
-  }, [user]);
+  function handleFile(event) {
+    const fileReader = new FileReader();
+    const { files } = event.target;
+
+    fileReader.onload = (e) => {
+      const fileContent = e.target.result;
+
+      setContent((state) => `${state}\n![](${fileContent})`);
+    };
+
+    for(let index = 0; index <= files.length - 1; index++) {
+      fileReader.readAsDataURL(files[index]);
+    }
+  }
+
+  //useEffect(() => {
+  //  setEmail(user?.email);
+  //}, [user]);
 
   return (
     <Layout>
@@ -89,7 +104,6 @@ export default function Publicar() {
         }}
         className="text-5 px-4 py-[0.5rem] top-[6rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
         placeholder="Título"
-        defaultValue={title}
         value={title}
         required={true}
       ></input>
@@ -112,10 +126,19 @@ export default function Publicar() {
               onChange={(e) => {
                 setContent(e.currentTarget.value);
               }}
-              defaultValue={content}
               value={content}
               required={true}
             ></textarea>
+
+            <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
+              <input
+                className="px-[1rem] py-[0.25rem] text-sm w-[22.25rem] md:w-[60.5rem] absolute"
+                type="file"
+                accept="images/*"
+                onChange={handleFile}
+                multiple
+              />
+            </div>
           </div>
         )}
 
@@ -123,7 +146,7 @@ export default function Publicar() {
           onClick={() => {
             setMode("write");
           }}
-          className="write z-50 text-[0.9rem] top-[10rem] left-[3rem] md:text-[0.9rem] md:top-[10rem] md:left-[3rem] absolute"
+          className="write z-40 text-[0.9rem] top-[10rem] left-[3rem] md:text-[0.9rem] md:top-[10rem] md:left-[3rem] absolute"
         >
           Escrever
         </button>
@@ -131,7 +154,7 @@ export default function Publicar() {
           onClick={() => {
             setMode("view");
           }}
-          className="view z-50 text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
+          className="view z-40 text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
         >
           Visualizar
         </button>
