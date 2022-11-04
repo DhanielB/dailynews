@@ -44,7 +44,7 @@ export default function username({ newsFetched }) {
         <Confetti onConfettiComplete={() => {
           window.localStorage.setItem("confetti", "off")
         }}/>
-      : null}
+      ) : null}
 
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content, sourceUrl } = news;
