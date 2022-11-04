@@ -10,6 +10,7 @@ import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
+import Confetti from 'react-confetti' 
 
 import "katex/dist/katex.min.css";
 import axios from "axios";
@@ -17,6 +18,10 @@ import axios from "axios";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username, post } = router.query;
+
+  useEffect(() => {
+    setShowConfetti(window.localStorage.getItem("confetti"))
+  , [])
 
   async function handleDelete() {
     await axios.post("/api/v1/db/deleteNews", {
@@ -29,6 +34,12 @@ export default function username({ newsFetched }) {
 
   return (
     <Layout>
+      {showConfetti ? (
+        <Confetti onComplete={() => {
+          window.localStorage.setItem("confetti", false)
+        }}/>
+      }
+
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content, sourceUrl } = news;
 
