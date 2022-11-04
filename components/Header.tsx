@@ -10,7 +10,7 @@ export default function Header() {
   const [lookingAt, setLokingAt] = useState("relevant");
 
   useEffect(() => {
-    setLookingAt(window.localStorage.getItem("lookingAt")); 
+    setLokingAt(window.localStorage.getItem("lookingAt")); 
   }, []);
 
   useEffect(() => {
