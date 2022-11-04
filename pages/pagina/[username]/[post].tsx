@@ -41,7 +41,7 @@ export default function username({ newsFetched }) {
   return (
     <Layout>
       {showConfetti == "on" ? (
-        <Confetti onComplete={() => {
+        <Confetti onConfettiComplete={() => {
           window.localStorage.setItem("confetti", false)
         }}/>
       : null}
