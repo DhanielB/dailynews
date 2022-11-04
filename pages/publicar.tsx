@@ -66,7 +66,7 @@ export default function Publicar() {
           window.localStorage.setItem("title", "");
           window.localStorage.setItem("content", "");
           window.localStorage.setItem("source", ""); 
-          window.localStorage.setItem("confetti", true);
+          window.localStorage.setItem("confetti", "on");
 
           Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
         }
