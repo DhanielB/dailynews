@@ -19,14 +19,14 @@ import axios from "axios";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username, post } = router.query;
-  const [showConfetti, setShowConfetti] = useState(false)
+  const [showConfetti, setShowConfetti] = useState("off")
 
   useEffect(() => {
     setShowConfetti(window.localStorage.getItem("confetti"))
   }, [])
 
   useEffect(() => {
-    window.localStorage.setItem("confetti", showConfetti || false);
+    window.localStorage.setItem("confetti", showConfetti || "off");
   }, [showConfetti]);
 
   async function handleDelete() {
@@ -40,11 +40,11 @@ export default function username({ newsFetched }) {
 
   return (
     <Layout>
-      {showConfetti ? (
+      {showConfetti == "on" ? (
         <Confetti onComplete={() => {
           window.localStorage.setItem("confetti", false)
         }}/>
-      }
+      : null}
 
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content, sourceUrl } = news;
