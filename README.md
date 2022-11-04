@@ -6,5 +6,5 @@
 Simple, Fast, open to all **🐶**
 
 
-## License
+## <a href="https://app.fossa.com">License</a>
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ffloresty%2Fdailynews.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ffloresty%2Fdailynews?ref=badge_large)
