@@ -40,11 +40,9 @@ export default function username({ newsFetched }) {
 
   return (
     <Layout>
-      {showConfetti == "on" ? (
-        <Confetti onConfettiComplete={() => {
-          window.localStorage.setItem("confetti", "off")
-        }}/>
-      ) : null}
+      <Confetti onConfettiComplete={() => {
+        window.localStorage.setItem("confetti", "off")
+      }} numberOfPieces={showConfetti == "on" ? 1000 : 0}/>
 
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content, sourceUrl } = news;
