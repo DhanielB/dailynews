@@ -18,10 +18,15 @@ import axios from "axios";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username, post } = router.query;
+  const [showConfetti, setShowConfetti] = useState(false)
 
   useEffect(() => {
     setShowConfetti(window.localStorage.getItem("confetti"))
-  , [])
+  }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem("confetti", showConfetti || false);
+  }, [showConfetti]);
 
   async function handleDelete() {
     await axios.post("/api/v1/db/deleteNews", {
