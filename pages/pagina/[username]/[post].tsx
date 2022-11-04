@@ -22,6 +22,10 @@ export default function username({ newsFetched }) {
   const [showConfetti, setShowConfetti] = useState("off")
 
   useEffect(() => {
+    setTimeout(() => {
+      setShowConfetti("off")
+    }, 5000)
+
     setShowConfetti(window.localStorage.getItem("confetti"))
   }, [])
 
