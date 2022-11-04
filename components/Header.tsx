@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "../lib/hooks/useUser";
 import axios from "axios";
 
