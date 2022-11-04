@@ -9,6 +9,14 @@ export default function Header() {
 
   const [lookingAt, setLokingAt] = useState("relevant");
 
+  useEffect(() => {
+    setTitle(window.localStorage.getItem("lookingAt")); 
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("lookingAt", lookingAt || 'relevant');
+  }, [lookingAt]);
+
   return (
     <div className="w-full h-16 bg-[#23292f] absolute">
       <div
