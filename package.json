@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "katex": "*",
+    "react-confetti": "*",
     "rehype-raw": "*",
     "remark-math": "*",
     "remark-gfm": "*",
