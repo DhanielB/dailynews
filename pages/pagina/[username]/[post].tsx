@@ -11,6 +11,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import Confetti from 'react-confetti' 
+import { useEffect, useState } from "react"
 
 import "katex/dist/katex.min.css";
 import axios from "axios";
