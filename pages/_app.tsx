@@ -13,7 +13,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <div>
       {isLoading ? (
-        <>loading...</>
+        <p className="text-gray-400 top-[1rem] left-[8rem] md:top-[1rem] md:left-[27.5rem] absolute">
+            Carregando...
+         </p>
       ) : (
         <Component {...pageProps} />
       )}
