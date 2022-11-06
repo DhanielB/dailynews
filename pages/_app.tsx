@@ -1,30 +1,41 @@
 import "../styles/globals.css";
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import pensador from "pensador"
-import Layout from "../components/Layout";
+import Router from "next/router";
 
-function MyApp({ Component, pageProps }) {
-  const [isLoading, setIsLoading] = useState(true)
-  const router = useRouter()
-  
-  useEffect(() => {
-    router.isReady && setIsLoading(false)
-  }, []) 
+export default function App({
+  Component,
+  pageProps
+}) {
+  const [loading, setLoading] = React.useState(false);
+  React.useEffect(() => {
+    const start = () => {
+      console.log("start");
+      setLoading(true);
+    };
+    const end = () => {
+      console.log("finished");
+      setLoading(false);
+    };
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
+    return () => {
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
+  }, []);
 
-  return (
+  return ( 
     <div>
-      {isLoading ? (
+      {loading ? (
         <Layout>
           <p className="text-gray-400 top-[1rem] left-[8rem] md:top-[1rem] md:left-[27.5rem] absolute">
             Carregando...
           </p>
         </Layout>
       ) : (
-        <Component {...pageProps} />
+        <Component {...pageProps}/>
       )}
-    </div>
-  )
+    <div/>
+  );
 }
-
-export default MyApp
