@@ -1,5 +1,5 @@
 import Header from "./Header";
-import { AnalyticsWrapper } from './components/analytics';
+import { AnalyticsWrapper } from './analytics';
 
 export default function Layout({ children }: { children: any }) {
   return (
