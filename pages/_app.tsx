@@ -2,6 +2,8 @@ import "../styles/globals.css";
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import pensador from "pensador"
+import Layout from "../components/Layout";
+
 function MyApp({ Component, pageProps }) {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
