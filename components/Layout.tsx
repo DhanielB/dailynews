@@ -1,4 +1,5 @@
 import Header from "./Header";
+import { AnalyticsWrapper } from './components/analytics';
 
 export default function Layout({ children }: { children: any }) {
   return (
@@ -7,6 +8,7 @@ export default function Layout({ children }: { children: any }) {
       <div className="flex w-screen h-[45.5rem] md:h-[37rem] top-16 absolute">
         {children}
       </div>
+      <AnalyticsWrapper />
     </div>
   );
 }
