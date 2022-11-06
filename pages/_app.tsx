@@ -10,24 +10,20 @@ export default function App({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const start = () => {
+    const handleStart = () => {
       setLoading(true);
     };
 
-    const end = () => {
-      setLoading(false);
+    const handleComplete = () => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
     };
 
-    Router.events.on("routeChangeStart", start);
-    Router.events.on("routeChangeComplete", end);
-    Router.events.on("routeChangeError", end);
-
-    return () => {
-      Router.events.off("routeChangeStart", start);
-      Router.events.off("routeChangeComplete", end);
-      Router.events.off("routeChangeError", end);
-    };
-  }, []);
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+  }, [router]);
 
   return ( 
     <div>
