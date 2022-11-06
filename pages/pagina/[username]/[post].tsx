@@ -86,15 +86,17 @@ export default function username({ newsFetched }) {
 }
 
 export async function getServerSideProps(context) {
-  const { username, post } = context.query;
+  const { username, post, pagina } = context.query;
 
   const { data } = await findNewsHook({
     title: undefined,
-    titleSlug: post.toString(),
-    by: username.toString(),
+    titleSlug: undefined,
+    by: undefined,
     slug: undefined,
     sourceUrl: undefined,
     content: undefined,
+    limit: 10,
+    page: pagina || 0
   });
 
   return {

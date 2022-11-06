@@ -8,6 +8,8 @@ export default async function findNews({
   slug,
   sourceUrl,
   content,
+  page,
+  limit
 }: {
   title: string;
   titleSlug: string;
@@ -15,6 +17,8 @@ export default async function findNews({
   slug: string;
   sourceUrl: string;
   content: string;
+  page: number;
+  limit: number;
 }) {
   const prisma = new PrismaClient();
   await prisma.$connect();
@@ -29,6 +33,8 @@ export default async function findNews({
       sourceUrl: sourceUrl,
       content: content,
     }),
+    skip: (page * limit),
+    take: limit
   });
 
   await prisma.$disconnect();
