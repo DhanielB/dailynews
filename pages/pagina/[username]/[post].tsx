@@ -33,20 +33,11 @@ export default function username({ newsFetched }) {
     window.localStorage.setItem("confetti", showConfetti || "off");
   }, [showConfetti]);
 
-  async function handleDelete() {
-    await axios.post("/api/v1/db/deleteNews", {
-      by: username,
-      titleSlug: post,
-    });
-
-    router.push("/");
-  }
-
   return (
     <Layout>
       <Confetti onConfettiComplete={() => {
         window.localStorage.setItem("confetti", "off")
-      }} numberOfPieces={showConfetti == "on" ? 1000 : 0}/>
+      }} numberOfPieces={showConfetti == "on" ? 500 : 0}/>
 
       {newsFetched.map((news) => {
         const { title, titleSlug, by, content, sourceUrl } = news;
@@ -58,19 +49,7 @@ export default function username({ newsFetched }) {
               <code className="bg-blue-300 text-blue-500 rounded-md px-1 py-[0.5rem] ml-4 mt-6">
                 {username}
               </code>
-              {by == username ? null : (
-                <div>
-                  <button className="text-gray-500 top-[1rem] left-[17rem] absolute">
-                    editar
-                  </button>
-                  <button
-                    onClick={handleDelete}
-                    className="text-red-500 top-[1rem] left-[21rem] absolute"
-                  >
-                    deletar
-                  </button>
-                </div>
-              )}
+              
               <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex, rehypeRaw]}

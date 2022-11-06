@@ -107,7 +107,7 @@ const Home = ({ newsFetched, page }) => {
         <footer>
           <div className="flex">
             <a
-              className="flex ml-[5rem] mr-[1rem]"
+              className="flex ml-[5rem] mr-[1rem] md:ml-[25rem]"
               onClick={() => {
                 router.push({
                   query: {

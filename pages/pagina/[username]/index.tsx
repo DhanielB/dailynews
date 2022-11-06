@@ -7,7 +7,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { CaretLeft, CaretRight } from "phosphor-react";
 import { useState } from "react";
 
-export default function username({ newsFetched, page }) {
+export default function username({ newsFetched, users, page }) {
   const router = useRouter();
   const { username } = router.query;
 
@@ -15,7 +15,7 @@ export default function username({ newsFetched, page }) {
     <Layout>
       <div>
         <h1 className="w-[22.5rem] pb-4 m-[1.5rem] font-extrabold text-[2rem] text-[#23292f] border-b">
-          {username}
+          {username} {users == 0 ? "(Usuário não existe)" : null}
         </h1>
       </div>
 
@@ -98,46 +98,6 @@ export default function username({ newsFetched, page }) {
           );
         })}
       </ul>
-
-      {newsFetched.length == 0 ? (
-        <footer>
-          <div className="flex">
-            <a
-              className="flex ml-[5rem] mr-[1rem]"
-              onClick={() => {
-                router.push({
-                  query: {
-                    pagina: page > 0 ? page - 1 : page,
-                  },
-                });
-              }}
-            >
-              <CaretLeft size={20} className="mt-[4.15rem]" />
-              <p className="text-gray-650 text-[1.1rem] mt-[4rem]">Anterior</p>
-            </a>
-
-            <a className="flex">
-              <p
-                className="text-blue-500 text-[1.1rem] mt-[4rem]"
-                onClick={() => {
-                  router.push({
-                    query: {
-                      pagina: page + 1,
-                    },
-                  });
-                }}
-              >
-                Proximo
-              </p>
-              <CaretRight
-                size={20}
-                color="rgb(59 130 246)"
-                className="mt-[4.15rem]"
-              />
-            </a>
-          </div>
-        </footer>
-      ) : null}
     </Layout>
   );
 }
@@ -145,7 +105,7 @@ export default function username({ newsFetched, page }) {
 export async function getServerSideProps(context) {
   const { username, pagina } = context.query;
 
-  const { data } = await findNewsHook({
+  const response = await findNewsHook({
     title: undefined,
     titleSlug: undefined,
     by: username.toString(),
@@ -156,9 +116,12 @@ export async function getServerSideProps(context) {
     page: pagina > 0 ? pagina : 0 || 0,
   });
 
+  const { data } = response
+
   return {
     props: {
       newsFetched: data,
+      users: Number(response.count),
       page: Number(pagina > 0 ? pagina : 0 || 0),
     },
   };

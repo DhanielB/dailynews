@@ -19,7 +19,7 @@ export default async function deleteNews({
   const prisma = new PrismaClient();
   await prisma.$connect();
 
-  const news = await prisma.news.delete({
+  const news = await prisma.news.deleteMany({
     //@ts-ignore
     where: filterObject({
       title: title,

@@ -91,11 +91,19 @@ const Recent = ({ newsFetched, page }) => {
         })}
       </ul>
 
+      <div>
+        {newsFetched.length == 0 ? (
+          <p className="text-gray-400 top-[1rem] left-[8rem] md:top-[1rem] md:left-[27.5rem] absolute">
+            Não tem nada aqui.
+          </p>
+        ) : null}
+      </div>
+
       {newsFetched.length == 0 ? (
         <footer>
           <div className="flex">
             <a
-              className="flex ml-[5rem] mr-[1rem]"
+              className="flex ml-[5rem] mr-[1rem] md:ml-[25rem]"
               onClick={() => {
                 router.push({
                   query: {
