@@ -11,7 +11,9 @@ const Home = ({ newsFetched, page }) => {
   const router = useRouter();
 
   useEffect(() => {
-    page > 0 ? null : 0 || router.push({ query: { pagina: 0 } });
+    if(page < 0) {
+      router.push({ query: { pagina: 0 } });
+    }
   }, []);
 
   return (
