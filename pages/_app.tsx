@@ -30,7 +30,7 @@ export default function App({
     <div>
       {loading ? (
         <Layout>
-          <p className="text-gray-400 top-[1rem] left-[8rem] md:top-[1rem] md:left-[27.5rem] absolute">
+          <p className="text-gray-400 top-[1rem] left-[10rem] md:top-[1rem] md:left-[29.5rem] absolute">
             Carregando...
           </p>
         </Layout>
