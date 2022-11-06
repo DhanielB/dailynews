@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import { useState, useEffect } from "react"
 
@@ -7,6 +7,7 @@ export default function App({
   Component,
   pageProps
 }) {
+  const router = useRouter()
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
