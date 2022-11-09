@@ -28,7 +28,7 @@ model News {
   sourceUrl    String
   content      String
   user         Users  @relation(fields: [userId], references: [id])
-  userId       String @unique @db.ObjectId
+  userId       String @db.ObjectId
   editedAt     Int
   createdAt    Int
 }
