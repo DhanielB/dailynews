@@ -63,6 +63,7 @@ export default function Publicar() {
     }
 
     setInternalContent(contentWithImage)
+    console.log(`1: ${internalContent}, 2: ${externalContent}, 3: ${images}, 4: ${contentWithImage}`)
   }, [externalContent])
 
   async function handlePublish(event) {
