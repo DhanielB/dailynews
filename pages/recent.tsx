@@ -13,7 +13,7 @@ const Recent = ({ newsFetched, page }) => {
   return (
     <Layout>
       <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">
-        {newsFetched.map((news, newsCounted) => {
+        {newsFetched.reverse().map((news, newsCounted) => {
           const { title, commentCount, by, createdAt } = news;
 
           return (
