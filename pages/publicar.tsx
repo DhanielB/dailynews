@@ -116,7 +116,7 @@ export default function Publicar() {
         data: fileContent
       })
 
-      setExternalContent((state) => `${state}${state == '' ? '' : '\n'}![](${fileCode})`);
+      setExternalContent((state) => `${state}\n![](${fileCode})`);
     };
 
     for (let index = 0; index <= files.length - 1; index++) {
