@@ -84,7 +84,7 @@ export default function Publicar() {
           by: by,
           slug: `/pagina/${formatText(by)}/${formatText(title)}`,
           sourceUrl: source,
-          content: externalContent,
+          content: internalContent,
           auth: {
             email: user.email,
           },
