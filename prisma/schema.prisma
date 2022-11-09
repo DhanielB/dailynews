@@ -10,30 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model News {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  titleSlug    String
-  commentCount Int
-  by           String
-  slug         String
-  sourceUrl    String
-  content      String
-  editedAt     Int
-  createdAt    Int
-}
-
 model Users {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   name      String @unique
   email     String @unique
   createdAt Int
+  News      News[]
 }
 
-model Comments {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  by        String
-  postId    String
-  content   String
-  createdAt Int
+model News {
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  title        String @unique
+  titleSlug    String @unique
+  commentCount Int
+  by           String
+  slug         String
+  sourceUrl    String
+  content      String
+  user         Users  @relation(fields: [userId], references: [id])
+  userId       String @unique @db.ObjectId
+  editedAt     Int
+  createdAt    Int
 }

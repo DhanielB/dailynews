@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { useUser } from "../lib/hooks/useUser";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
 import ReactMarkdown from "react-markdown";
@@ -12,39 +12,63 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
+import { v4 } from "uuid"
 
 export default function Publicar() {
+  const router = useRouter();
   const user = useUser({ redirectTo: "/cadastro" });
 
+  const [images, setImages] = useState([])
   const [mode, setMode] = useState("write");
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [internalContent, setInternalContent] = useState("");
+  const [externalContent, setExternalContent] = useState("");
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
   const [canPublish, setCanPublish] = useState(true);
 
   useEffect(() => {
     setTitle(window.localStorage.getItem("title"));
-    setContent(window.localStorage.getItem("content"));
+    setImages(JSON.parse(window.localStorage.getItem("images") || JSON.stringify("[]")))
+    setInternalContent(window.localStorage.getItem("internalContent"));
+    setExternalContent(window.localStorage.getItem("externalContent"));
     setSource(window.localStorage.getItem("source"));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("title", title || '');
+    window.localStorage.setItem("title", title || "");
   }, [title]);
 
   useEffect(() => {
-    window.localStorage.setItem("content", content || '');
-  }, [content]);
+    window.localStorage.setItem("images", JSON.stringify(images || []));
+  }, [images])
 
   useEffect(() => {
-    window.localStorage.setItem("source", source || '');
+    window.localStorage.setItem("externalContent", externalContent || "");
+  }, [externalContent]);
+
+  useEffect(() => {
+    window.localStorage.setItem("internalContent", internalContent || "");
+  }, [internalContent]);
+
+  useEffect(() => {
+    window.localStorage.setItem("source", source || "");
   }, [source]);
+
+  useEffect(() => {
+    let contentWithImage = externalContent
+
+    for(let image of images) {
+      contentWithImage = contentWithImage.replaceAll(image.text, image.data)
+    }
+
+    setInternalContent(contentWithImage)
+  }, [externalContent])
 
   async function handlePublish(event) {
     event.preventDefault();
 
-    if (canPublish && title != "" && content.length > 50) {
+    if (canPublish && title != "" && externalContent.length > 50) {
       setCanPublish(false);
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
@@ -59,16 +83,21 @@ export default function Publicar() {
           by: by,
           slug: `/pagina/${formatText(by)}/${formatText(title)}`,
           sourceUrl: source,
-          content: content,
+          content: externalContent,
+          auth: {
+            email: user.email,
+          },
         });
 
         if (responsePublish.status == 200) {
           window.localStorage.setItem("title", "");
-          window.localStorage.setItem("content", "");
-          window.localStorage.setItem("source", ""); 
+          window.localStorage.setItem("images", JSON.stringify([]));
+          window.localStorage.setItem("internalContent", "");
+          window.localStorage.setItem("externalContent", "");
+          window.localStorage.setItem("source", "");
           window.localStorage.setItem("confetti", "on");
 
-          Router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
+          router.push(`/pagina/${formatText(by)}/${formatText(title)}`);
         }
       }
     }
@@ -79,12 +108,18 @@ export default function Publicar() {
     const { files } = event.target;
 
     fileReader.onload = async (e) => {
+      const fileCode = v4()
       const fileContent = e.target.result;
-      
-      setContent((state) => `${state}\n![](${fileContent})`);
+
+      images.push({
+        text: fileCode,
+        data: fileContent
+      })
+
+      setExternalContent((state) => `${state}${state == '' ? '' : '\n'}![](${fileCode})`);
     };
 
-    for(let index = 0; index <= files.length - 1; index++) {
+    for (let index = 0; index <= files.length - 1; index++) {
       fileReader.readAsDataURL(files[index]);
     }
   }
@@ -117,18 +152,21 @@ export default function Publicar() {
               rehypePlugins={[rehypeKatex, rehypeRaw]}
               className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
             >
-              {content}
+              {internalContent}
             </ReactMarkdown>
           </div>
         ) : (
           <div>
             <textarea
-              autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
               className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
               onChange={(e) => {
-                setContent(e.currentTarget.value);
+                setExternalContent(e.currentTarget.value);
               }}
-              value={content}
+              value={externalContent}
               required={true}
             ></textarea>
 
@@ -172,7 +210,12 @@ export default function Publicar() {
         placeholder="Fonte (Opicional)"
       ></input>
 
-      <button className="top-[33rem] left-[14rem] text-gray-600 md:text-base md:top-[34rem] md:left-[52rem] absolute">
+      <button
+        onClick={() => {
+          router.back();
+        }}
+        className="top-[33rem] left-[14rem] text-gray-600 md:text-base md:top-[34rem] md:left-[52rem] absolute"
+      >
         Cancelar
       </button>
       <button

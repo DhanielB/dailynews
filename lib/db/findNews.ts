@@ -19,6 +19,7 @@ export default async function findNews({
   content: string;
   page: number;
   limit: number;
+  recent: boolean;
 }) {
   const prisma = new PrismaClient();
   await prisma.$connect();
