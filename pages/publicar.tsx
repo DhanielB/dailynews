@@ -112,10 +112,10 @@ export default function Publicar() {
       const fileCode = v4()
       const fileContent = e.target.result;
 
-      images.push({
+      setImages(state => [...state, {
         text: fileCode,
         data: fileContent
-      })
+      }])
 
       setExternalContent((state) => `${state}\n![](${fileCode})`);
     };
