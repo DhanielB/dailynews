@@ -13,6 +13,7 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 import { v4 } from "uuid"
+import { Editor } from "@bytemd/react"
 
 export default function Publicar() {
   const router = useRouter();
@@ -158,7 +159,7 @@ export default function Publicar() {
           </div>
         ) : (
           <div>
-            <textarea
+            <Editor
               autoComplete="off"
               autoCorrect="off"
               autoCapitalize="off"
@@ -169,7 +170,7 @@ export default function Publicar() {
               }}
               value={externalContent}
               required={true}
-            ></textarea>
+            ></Editor>
 
             <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
               <input
