@@ -7,6 +7,11 @@
   },
   "dependencies": {
     "@bytemd/react": "*",
+    "@bytemd/plugin-gfm": "*",
+    "@bytemd/plugin-highlight-ssr": "*",
+    "@bytemd/plugin-mermaid": "*",
+    "@bytemd/plugin-gemoji": "*",
+    "@bytemd/plugin-breaks": "*",
     "@hapi/iron": "*",
     "@magic-sdk/admin": "*",
     "@prisma/client": "^4.5.0",
