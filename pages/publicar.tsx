@@ -14,11 +14,29 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 import { v4 } from "uuid"
 import { Editor } from "@bytemd/react"
+import gfmPlugin from '@bytemd/plugin-gfm';
+import highlightSsrPlugin from '@bytemd/plugin-highlight-ssr';
+import mermaidPlugin from '@bytemd/plugin-mermaid';
+import breaksPlugin from '@bytemd/plugin-breaks';
+import gemojiPlugin from '@bytemd/plugin-gemoji';
+import byteMDLocale from 'bytemd/locales/pt_BR.json';
+import gfmLocale from '@bytemd/plugin-gfm/locales/pt_BR.json';
+import mermaidLocale from '@bytemd/plugin-mermaid/locales/pt_BR.json';
 import 'bytemd/dist/index.min.css';
+import 'highlight.js/styles/github.css';
+import 'github-markdown-css/github-markdown-light.css';
+
 
 export default function Publicar() {
   const router = useRouter();
-  //const user = useUser({ redirectTo: "/cadastro" });
+  const user = useUser({ redirectTo: "/cadastro" });
+  const bytemdPluginList = [
+    gfmPlugin({ locale: gfmLocale }),
+    highlightSsrPlugin(),
+    mermaidPlugin({ locale: mermaidLocale }),
+    breaksPlugin(),
+    gemojiPlugin(),
+  ];
 
   const [images, setImages] = useState([])
   const [mode, setMode] = useState("write");
@@ -65,7 +83,6 @@ export default function Publicar() {
     }
 
     setInternalContent(contentWithImage)
-    console.log(`1: ${internalContent}, 2: ${externalContent}, 3: ${images}, 4: ${contentWithImage}`)
   }, [externalContent])
 
   async function handlePublish(event) {
@@ -88,7 +105,7 @@ export default function Publicar() {
           sourceUrl: source,
           content: internalContent,
           auth: {
-            email: "user.email",
+            email: user.email,
           },
         });
 
@@ -127,9 +144,9 @@ export default function Publicar() {
     }
   }
 
-  //useEffect(() => {
-  //  setEmail(user?.email);
-  //}, [user]);
+  useEffect(() => {
+    setEmail(user?.email);
+  }, [user]);
 
   return (
     <Layout>
@@ -148,54 +165,25 @@ export default function Publicar() {
       ></input>
 
       <div>
-        {mode == "view" ? (
-          <div className="flex flex-col overflow-auto">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm, remarkMath]}
-              rehypePlugins={[rehypeKatex, rehypeRaw]}
-              className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
-            >
-              {internalContent}
-            </ReactMarkdown>
-          </div>
-        ) : (
-          <div>
-            <Editor
-              onChange={(e) => {
-                setExternalContent(e);
-              }}
-              value={externalContent}
-              mode="tab"
-            ></Editor>
-
-            <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
-              <input
-                className="px-[1rem] py-[0.25rem] text-sm w-[22.25rem] md:w-[60.5rem] absolute"
-                type="file"
-                accept="images/*"
-                onChange={handleFile}
-                multiple
-              />
-            </div>
-          </div>
-        )}
-
-        {/*<button
-          onClick={() => {
-            setMode("write");
+        <Editor
+          onChange={(value) => {
+            setExternalContent(value);
           }}
-          className="write z-40 text-[0.9rem] top-[10rem] left-[3rem] md:text-[0.9rem] md:top-[10rem] md:left-[3rem] absolute"
-        >
-          Escrever
-        </button>
-        <button
-          onClick={() => {
-            setMode("view");
-          }}
-          className="view z-40 text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
-        >
-          Visualizar
-        </button>*/}
+          value={externalContent}
+          plugins={bytemdPluginList}
+          locale={byteMDLocale}
+          mode="tab"
+        ></Editor>
+
+        <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
+          <input
+            className="px-[1rem] py-[0.25rem] text-sm w-[22.25rem] md:w-[60.5rem] absolute"
+            type="file"
+            accept="images/*"
+            onChange={handleFile}
+            multiple
+          />
+        </div>
       </div>
 
       <input
