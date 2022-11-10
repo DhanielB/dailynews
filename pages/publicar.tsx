@@ -160,13 +160,10 @@ export default function Publicar() {
         ) : (
           <div>
             <Editor
-              className="h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
               onChange={(e) => {
                 setExternalContent(e);
               }}
               value={externalContent}
-          
-
             ></Editor>
 
             <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
@@ -224,7 +221,11 @@ export default function Publicar() {
         Publicar
       </button>
 
-      <style jsx>{`
+      <style global jsx>{`
+        .bytemd {
+          @apply h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute
+        }
+
         .view {
           ${mode == "view" ? "color: RoyalBlue;" : null}
         }
