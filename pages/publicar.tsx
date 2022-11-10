@@ -14,10 +14,11 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 import { v4 } from "uuid"
 import { Editor } from "@bytemd/react"
+import 'bytemd/dist/index.min.css';
 
 export default function Publicar() {
   const router = useRouter();
-  const user = useUser({ redirectTo: "/cadastro" });
+  //const user = useUser({ redirectTo: "/cadastro" });
 
   const [images, setImages] = useState([])
   const [mode, setMode] = useState("write");
@@ -87,7 +88,7 @@ export default function Publicar() {
           sourceUrl: source,
           content: internalContent,
           auth: {
-            email: user.email,
+            email: "user.email",
           },
         });
 
@@ -126,9 +127,9 @@ export default function Publicar() {
     }
   }
 
-  useEffect(() => {
-    setEmail(user?.email);
-  }, [user]);
+  //useEffect(() => {
+  //  setEmail(user?.email);
+  //}, [user]);
 
   return (
     <Layout>
@@ -164,6 +165,7 @@ export default function Publicar() {
                 setExternalContent(e);
               }}
               value={externalContent}
+              mode="tab"
             ></Editor>
 
             <div className="bg-gray-100 border-t-[2px] border-black border-opacity-20 top-[25.15rem] left-[1.75rem] w-[22.25rem] h-[2.5rem] rounded-b-md md:w-[60.5rem] absolute">
@@ -178,7 +180,7 @@ export default function Publicar() {
           </div>
         )}
 
-        <button
+        {/*<button
           onClick={() => {
             setMode("write");
           }}
@@ -193,7 +195,7 @@ export default function Publicar() {
           className="view z-40 text-[0.9rem] top-[10rem] left-[7.5rem] md:text-[0.9rem] md:top-[10rem] md:left-[7.5rem] absolute"
         >
           Visualizar
-        </button>
+        </button>*/}
       </div>
 
       <input
@@ -222,8 +224,53 @@ export default function Publicar() {
       </button>
 
       <style global jsx>{`
+        
         .bytemd {
-          @apply h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute
+          @apply h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute;
+          top: 6rem;
+          height: 18rem;
+          padding-left: 8rem;
+          padding-right: 1.5rem;
+          padding-top: 3rem;
+          padding-bottom: 3rem;
+          top: 9.725rem;
+          left: 1.625rem;
+          width: 22.5rem;
+          outline: 2px solid transparent;
+          outline-offset: 2px;
+          border-radius: 6px;
+          padding: 1px;
+          border: 1px solid #d0d7de;
+          position: absolute;
+        }
+        .bytemd:focus-within {
+          border-color: #0969da;
+          box-shadow: inset 0 0 0 1px #0969da;
+        }
+        .is-invalid .bytemd {
+          border-color: #cf222e;
+        }
+        .is-invalid .bytemd:focus-within {
+          border-color: #cf222e;
+          box-shadow: 0 0 0 3px rgb(164 14 38 / 40%);
+        }
+        .bytemd .bytemd-toolbar {
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
+        }
+        .bytemd .bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:nth-of-type(1),
+        .bytemd .bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:nth-of-type(4) {
+          display: none;
+        }
+        .bytemd .bytemd-status {
+          display: none;
+        }
+        .bytemd-fullscreen.bytemd {
+          z-index: 100;
+        }
+        .tippy-box {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+            'Segoe UI Emoji';
         }
 
         .view {

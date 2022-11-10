@@ -984,6 +984,13 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@bytemd/react@*":
+  version "1.17.4"
+  resolved "https://registry.yarnpkg.com/@bytemd/react/-/react-1.17.4.tgz#1f7417020283b138e932483323c3952cc00a22ca"
+  integrity sha512-zPezvpmfjM3QHk6tTa1jwd80BoGjozU9LJKQScEcdWxXUT8dUc0gHHos2XY7BJwbZJUHfkzZPns0nuJd4mc6aA==
+  dependencies:
+    bytemd "1.17.4"
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
@@ -1920,7 +1927,7 @@ builtins@^5.0.0:
   dependencies:
     semver "^7.0.0"
 
-bytemd@*:
+bytemd@*, bytemd@1.17.4:
   version "1.17.4"
   resolved "https://registry.yarnpkg.com/bytemd/-/bytemd-1.17.4.tgz#ffb7e2afa00b14d9f036a28d97e867fe11dad91a"
   integrity sha512-TYLiA2rToR1Q4yUFt9WXXeQ2RPoC+nQPuXOwe0h9dVs0cDMOPcGm7aEsSIpvAjyYE+PrUY9h3asPCUd+6TGcRQ==
