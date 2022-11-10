@@ -226,18 +226,17 @@ export default function Publicar() {
       <style global jsx>{`
         
         .bytemd {
-          @apply h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute;
-          top: 6rem;
-          height: 18rem;
+          position: absolute; 
+          height: 18rem; 
+          border-radius: 0.375rem; 
+          border-color: #000000; 
+          border-opacity: 0.2; 
+          outline: 0; 
           padding-left: 8rem;
           padding-right: 1.5rem;
-          padding-top: 3rem;
-          padding-bottom: 3rem;
           top: 9.725rem;
           left: 1.625rem;
           width: 22.5rem;
-          outline: 2px solid transparent;
-          outline-offset: 2px;
           border-radius: 6px;
           padding: 1px;
           border: 1px solid #d0d7de;
@@ -280,6 +279,14 @@ export default function Publicar() {
         .write {
           ${mode == "write" ? "color: RoyalBlue;" : null}
         }
+
+        @media (min-width: 768px) {
+          .bytemd {
+            top: 9.725rem;
+            left: 1.625rem;
+            width: 60.75rem;
+          }
+       }
       `}</style>
     </Layout>
   );
