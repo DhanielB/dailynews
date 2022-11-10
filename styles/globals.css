@@ -8,3 +8,8 @@
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   cursor: pointer;
 }
+
+
+.markdown-body {
+  background-color: #fafafa;
+}
