@@ -6,12 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
-    "@bytemd/react": "*",
+    "@bytemd/plugin-breaks": "*",
+    "@bytemd/plugin-gemoji": "*",
     "@bytemd/plugin-gfm": "*",
     "@bytemd/plugin-highlight-ssr": "*",
+    "@bytemd/plugin-math-ssr": "^1.17.4",
+    "@bytemd/plugin-medium-zoom": "^1.17.4",
     "@bytemd/plugin-mermaid": "*",
-    "@bytemd/plugin-gemoji": "*",
-    "@bytemd/plugin-breaks": "*",
+    "@bytemd/react": "*",
     "@hapi/iron": "*",
     "@magic-sdk/admin": "*",
     "@prisma/client": "^4.5.0",
