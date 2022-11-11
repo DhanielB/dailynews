@@ -4,9 +4,15 @@ import filterObject from "../hooks/filterObject";
 export default async function findUser({
   name,
   email,
+  nuked,
+  page,
+  limit
 }: {
   name?: string;
   email?: string;
+  nuked?: boolean;
+  page: number;
+  limit: number;
 }) {
   const prisma = new PrismaClient();
   await prisma.$connect();
@@ -16,7 +22,10 @@ export default async function findUser({
     where: filterObject({
       name: name,
       email: email,
+      nuked: nuked
     }),
+    skip: (page * limit),
+    take: limit
   });
 
   await prisma.$disconnect();

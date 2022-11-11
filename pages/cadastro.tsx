@@ -28,12 +28,14 @@ const SignUp = () => {
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
         email: body.email,
+        limit: 1000,
+        page: 0,
       });
 
       if (responseUser.data.count == 0) {
         const responseCreateUser = await axios.post("/api/v1/db/createUser", {
           name: formatText(userData),
-          email: body.email,
+          email: body.email
         });
 
         if (responseCreateUser.status == 200) {

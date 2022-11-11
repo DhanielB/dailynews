@@ -14,6 +14,7 @@ export default async function createUser({
     data: {
       name: name,
       email: email,
+      nuked: false,
       createdAt: Date.now(),
     },
   });

@@ -14,6 +14,7 @@ model Users {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   name      String @unique
   email     String @unique
+  nuked     Boolean
   createdAt Int
   News      News[]
 }
