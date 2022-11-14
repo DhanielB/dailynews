@@ -293,7 +293,7 @@ export default function Publicar({ userFetched }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const { data } = await findUser({
     limit: 1000,
     page: 0,
