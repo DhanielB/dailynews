@@ -1,26 +1,42 @@
 import Head from 'next/head'
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
-import "bytemd/dist/index.min.css";
+import findNewsHook from "../../../lib/db/findNews";
+import Confetti from 'react-confetti' 
+import { useEffect, useState } from "react"
+import axios from "axios";
+
+import "katex/dist/katex.min.css";
+import { Viewer } from "@bytemd/react";
+import gfmPlugin from "@bytemd/plugin-gfm";
+import highlightSsrPlugin from "@bytemd/plugin-highlight-ssr";
+import mermaidPlugin from "@bytemd/plugin-mermaid";
+import breaksPlugin from "@bytemd/plugin-breaks";
+import gemojiPlugin from "@bytemd/plugin-gemoji";
+import mathSsrPlugin from "@bytemd/plugin-math-ssr";
+import mediumZoom from "@bytemd/plugin-medium-zoom";
+
+import byteMDLocale from "bytemd/locales/pt_BR.json";
+import gfmLocale from "@bytemd/plugin-gfm/locales/pt_BR.json";
+import mermaidLocale from "@bytemd/plugin-mermaid/locales/pt_BR.json";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
-import findNewsHook from "../../../lib/db/findNews";
-import ReactMarkdown from "react-markdown";
-import rehypeKatex from "rehype-katex";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
-import remarkMath from "remark-math";
-import Confetti from 'react-confetti' 
-import { useEffect, useState } from "react"
-
-import "katex/dist/katex.min.css";
-import axios from "axios";
 
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username, post } = router.query;
   const [showConfetti, setShowConfetti] = useState("off")
+
+  const bytemdPluginList = [
+    gfmPlugin({ locale: gfmLocale }),
+    highlightSsrPlugin(),
+    mermaidPlugin({ locale: mermaidLocale }),
+    breaksPlugin(),
+    gemojiPlugin(),
+    mathSsrPlugin(),
+    mediumZoom(),
+  ];
 
   useEffect(() => {
     setTimeout(() => {
@@ -55,16 +71,23 @@ export default function username({ newsFetched }) {
                 {username}
               </code>
               
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeRaw]}
-                children={`# ${title}\n${content}\n\n### ${sourceUrl || ""}`}
-                className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] bg-[#fafafa]"
+              <Viewer
+                plugins={bytemdPluginList}
+                source={`# ${title}\n${content}\n\n### ${sourceUrl || ""}`}
               />
             </div>
           );
         }
       })}
+
+      <style jsx global>{`
+        .markdown-body {
+          width: calc(100vw - 2rem);
+          word-break: break-all;
+          padding-top: 1rem:
+          background-color: #fafafa;
+        }
+      `}</style>
     </Layout>
   );
 }
