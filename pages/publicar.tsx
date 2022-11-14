@@ -8,17 +8,17 @@ import { v4 } from "uuid";
 
 import "katex/dist/katex.min.css";
 import { Editor } from "@bytemd/react";
-import gfmPlugin from "@bytemd/plugin-gfm";
-import highlightSsrPlugin from "@bytemd/plugin-highlight-ssr";
-import mermaidPlugin from "@bytemd/plugin-mermaid";
-import breaksPlugin from "@bytemd/plugin-breaks";
-import gemojiPlugin from "@bytemd/plugin-gemoji";
-import mathSsrPlugin from "@bytemd/plugin-math-ssr";
-import mediumZoom from "@bytemd/plugin-medium-zoom";
+//import gfmPlugin from "@bytemd/plugin-gfm";
+//import highlightSsrPlugin from "@bytemd/plugin-highlight-ssr";
+//import mermaidPlugin from "@bytemd/plugin-mermaid";
+//import breaksPlugin from "@bytemd/plugin-breaks";
+//import gemojiPlugin from "@bytemd/plugin-gemoji";
+//import mathSsrPlugin from "@bytemd/plugin-math-ssr";
+//import mediumZoom from "@bytemd/plugin-medium-zoom";
 
-import byteMDLocale from "bytemd/locales/pt_BR.json";
-import gfmLocale from "@bytemd/plugin-gfm/locales/pt_BR.json";
-import mermaidLocale from "@bytemd/plugin-mermaid/locales/pt_BR.json";
+//import byteMDLocale from "bytemd/locales/pt_BR.json";
+//import gfmLocale from "@bytemd/plugin-gfm/locales/pt_BR.json";
+//import mermaidLocale from "@bytemd/plugin-mermaid/locales/pt_BR.json";
 
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
@@ -29,15 +29,15 @@ export default function Publicar({ userFetched }) {
   const router = useRouter();
   const user = useUser({ redirectTo: "/cadastro" });
 
-  const bytemdPluginList = [
-    gfmPlugin({ locale: gfmLocale }),
-    highlightSsrPlugin(),
-    mermaidPlugin({ locale: mermaidLocale }),
-    breaksPlugin(),
-    gemojiPlugin(),
-    mathSsrPlugin(),
-    mediumZoom(),
-  ];
+  //const bytemdPluginList = [
+  //  gfmPlugin({ locale: gfmLocale }),
+  //  highlightSsrPlugin(),
+  //  mermaidPlugin({ locale: mermaidLocale }),
+  //  breaksPlugin(),
+  //  gemojiPlugin(),
+  //  mathSsrPlugin(),
+  //  mediumZoom(),
+  //];
 
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -159,8 +159,7 @@ export default function Publicar({ userFetched }) {
                 setContent(value);
               }}
               value={content}
-              plugins={bytemdPluginList}
-              locale={byteMDLocale}
+              
             ></Editor>
           </div>
           <input
