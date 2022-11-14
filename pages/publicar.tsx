@@ -161,7 +161,6 @@ export default function Publicar({ userFetched }) {
               value={content}
               plugins={bytemdPluginList}
               locale={byteMDLocale}
-              mode="tab"
             ></Editor>
           </div>
           <input
