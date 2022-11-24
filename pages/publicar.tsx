@@ -11,6 +11,7 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import Confetti from 'react-confetti' 
 import { useEffect, useState } from "react"
+import { useUser } from "../lib/hooks/useUser"
 
 import "katex/dist/katex.min.css";
 import axios from "axios";
@@ -18,6 +19,7 @@ import axios from "axios";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username, post } = router.query;
+  const user = useUser({ redirectTo: "/" })
   const [showConfetti, setShowConfetti] = useState("off")
 
   useEffect(() => {
