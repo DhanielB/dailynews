@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
-import Layout from "../../../components/Layout";
+import Layout from "../components/Layout";
 import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
-import findNewsHook from "../../../lib/db/findNews";
+import findNewsHook from "../lib/db/findNews";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
