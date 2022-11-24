@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
 import "bytemd/dist/index.min.css";
-import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
 import findNewsHook from "../../../lib/db/findNews";
