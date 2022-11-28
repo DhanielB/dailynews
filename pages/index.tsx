@@ -158,6 +158,7 @@ export async function getServerSideProps(context) {
     slug: undefined,
     sourceUrl: undefined,
     content: undefined,
+  }, {
     limit: 10,
     page: pagina > 0 ? pagina : 0 || 0,
   });

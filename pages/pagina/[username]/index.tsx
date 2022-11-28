@@ -111,7 +111,8 @@ export async function getServerSideProps(context) {
     by: username.toString(),
     slug: undefined,
     sourceUrl: undefined,
-    content: undefined,
+    content: undefined
+  }, {
     limit: 10,
     page: pagina > 0 ? pagina : 0 || 0,
   });

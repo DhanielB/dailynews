@@ -36,6 +36,7 @@ export default async function createNews({
           slug: slug,
           sourceUrl: sourceUrl,
           content: content,
+          votes: 0,
           editedAt: Date.now(),
           createdAt: Date.now(),
         }
