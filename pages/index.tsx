@@ -53,9 +53,9 @@ const Home = ({ newsFetched, page }) => {
 
                 {newsFetched.length - 1 == newsCounted ? (
                   <footer>
-                    <div className="flex">
+                    <div className="flex ml-[25vw] md:ml-[35vw]">
                       <a
-                        className="flex ml-[5rem] mr-[1rem]"
+                        className="flex mr-[1rem]"
                         onClick={() => {
                           router.push({
                             query: {

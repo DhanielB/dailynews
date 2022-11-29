@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import filterObject from "../hooks/filterObject";
 
+const prisma = new PrismaClient();
+
 export default async function findUser({
   name,
   email,
@@ -10,9 +12,6 @@ export default async function findUser({
   email?: string;
   nuked?: boolean;
 }, othersConfigs: { limit: number, page: number }) {
-  const prisma = new PrismaClient();
-  await prisma.$connect();
-
   function formatOthersConfigs(othersConfigs: { page?: any; limit?: any }) {
     let othersConfigsChanged: { skip?: any, take?: any } = {};
 

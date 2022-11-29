@@ -5,7 +5,7 @@ import findNewsHook from "../../../lib/db/findNews";
 import { formatDistance } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import { CaretLeft, CaretRight } from "phosphor-react";
-import { useState } from "react";
+import sortByKey from "../../../lib/hooks/sortByKey";
 
 export default function username({ newsFetched, users, page }) {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function username({ newsFetched, users, page }) {
         </h1>
       </div>
 
-      <ul className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:top-[10rem] md:left-[10rem] absolute">
+      <ul className="ml-[2rem] mt-[7.25rem] md:ml-[1.25rem] md:left-[10rem] absolute">
         {newsFetched.map((news, newsCounted) => {
           const { title, comment, by, on, createdAt } = news;
 
@@ -42,8 +42,7 @@ export default function username({ newsFetched, users, page }) {
                   }}
                 >
                   {by}
-                </span>{" "}
-                · <span>{on}</span> ·{" "}
+                </span>{" "}·{" "}
                 <span>
                   {" "}
                   Há{" "}
@@ -55,9 +54,9 @@ export default function username({ newsFetched, users, page }) {
 
               {newsFetched.length - 1 == newsCounted ? (
                 <footer>
-                  <div className="flex">
+                  <div className="flex ml-[25vw] md:ml-[25vw]">
                     <a
-                      className="flex ml-[5rem] mr-[1rem]"
+                      className="flex mr-[1rem]"
                       onClick={() => {
                         router.push({
                           query: {
@@ -121,7 +120,7 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      newsFetched: data,
+      newsFetched: sortByKey(data, "votes"),
       users: Number(response.count),
       page: Number(pagina > 0 ? pagina : 0 || 0),
     },

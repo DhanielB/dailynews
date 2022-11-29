@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import filterObject from "../hooks/filterObject";
 
+const prisma = new PrismaClient();
+
 export default async function deleteNews({
   title,
   titleSlug,
@@ -16,9 +18,6 @@ export default async function deleteNews({
   sourceUrl: string;
   content: string;
 }) {
-  const prisma = new PrismaClient();
-  await prisma.$connect();
-
   const news = await prisma.news.deleteMany({
     //@ts-ignore
     where: filterObject({

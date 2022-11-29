@@ -1,5 +1,5 @@
-export default function filterObject(object) {
+export default function filterObject(object): any {
   return Object.keys(object).forEach((key) =>
-    object[key] === undefined ? delete object[key] : null
+    object[key] ? null : delete object[key]
   );
 }

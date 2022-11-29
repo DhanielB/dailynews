@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import findNewsHook from "../../../../lib/db/findNews";
+import filterObject from "../../../../lib/hooks/filterObject";
 
 export default async function findNews(
   req: NextApiRequest,
@@ -14,9 +15,10 @@ export default async function findNews(
     slug: slug,
     sourceUrl: sourceUrl,
     content: content,
+  }, filterObject({
     page: page,
     limit: limit
-  });
+  }));
 
   res.status(200).json(data);
 }

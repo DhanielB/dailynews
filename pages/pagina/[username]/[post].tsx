@@ -16,30 +16,43 @@ import { useEffect, useState } from "react";
 import { CaretUp, CaretDown } from "phosphor-react";
 
 import "katex/dist/katex.min.css";
-import addNewsVote from "../../../lib/db/addNewsVote";
+import axios from "axios";
+import { useUser } from "../../../lib/hooks/useUser";
+import ptBR from "date-fns/locale/pt-BR";
+import { formatDistance } from "date-fns";
 
 export default function username({ newsFetched }) {
   const router = useRouter();
-  const { username, post } = router.query;
-  const [votes, setVotes] = useState(newsFetched.votes)
+  const { username } = router.query;
+  const [voted, setVoted] = useState(false)
+  const [votesCount, setVotesCount] = useState(newsFetched.votes);
   const [showConfetti, setShowConfetti] = useState("off");
+  const { id, title, content, sourceUrl, createdAt } = newsFetched;
+
+  const user = useUser({})
 
   async function addVotes() {
-    const news = await addNewsVote({
-      title: newsFetched.title,
-      votes: newsFetched.votes + 1
-    })
+    if(!voted && user?.email) {
+      setVotesCount(votesCount + 1);
+      setVoted(true)
 
-    setVotes(news.data.votes)
+      await axios.post("/api/v1/db/editVoteNews", {
+        title: newsFetched.title,
+        votes: votesCount + 1,
+      });
+    }
   }
 
   async function removeVotes() {
-    const news = await addNewsVote({
-      title: newsFetched.title,
-      votes: newsFetched.votes - 1
-    })
+    if(voted && user?.email) {
+      setVotesCount(votesCount - 1);
+      setVoted(false)
 
-    setVotes(news.data.votes)
+      await axios.post("/api/v1/db/editVoteNews", {
+        title: newsFetched.title,
+        votes: votesCount - 1,
+      });
+    }
   }
 
   useEffect(() => {
@@ -48,11 +61,16 @@ export default function username({ newsFetched }) {
     }, 5000);
 
     setShowConfetti(window.localStorage.getItem("confetti"));
+    setVoted(Boolean(window.localStorage.getItem(`voted-${id}`)));
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem("confetti", showConfetti || "off");
   }, [showConfetti]);
+
+  useEffect(() => {
+    window.localStorage.setItem(`voted-${id}`, voted.toString());
+  }, [voted]);
 
   return (
     <Layout>
@@ -63,66 +81,68 @@ export default function username({ newsFetched }) {
         numberOfPieces={showConfetti == "on" ? 500 : 0}
       />
 
-      {newsFetched.map((news) => {
-        const { title, titleSlug, by, content, sourceUrl, votes } = news;
+      <div className="p-[1rem]">
+        <Head>
+          <title>{title}</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        {/* @ts-ignore */}
+        <code className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 cursor-pointer hover:underline" onClick={() => {
+          router.push(`/pagina/${username}`)
+        }}>
+          {username}
+        </code>
 
-        if (by == username && titleSlug == post) {
-          return (
-            <div className="p-[1rem]">
-              <Head>
-                <title>{title}</title>
-                <meta
-                  name="viewport"
-                  content="initial-scale=1.0, width=device-width"
-                />
-              </Head>
-              {/* @ts-ignore */}
-              <code className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 hover:undeline">
-                {username}
-              </code>
+        <p className="text-[0.80rem] text-gray-500 rounded-md ml-[8rem] my-[0.5rem] top-[0.8rem] hover:underline absolute">Há {formatDistance(Date.now(), createdAt, { locale: ptBR })}</p>
 
-              <div className="absolute">
-                <CaretUp weight="bold" color="#a4acb4" onClick={addVotes}/>
-                <p className="text-blue-500">{votes}</p>
-                <CaretDown weight="bold" color="#a4acb4" onClick={removeVotes}/>
-              </div>
+        <div className="absolute">
+          <CaretUp weight="bold" color="#a4acb4" onClick={addVotes} />
+          <p className="text-center text-blue-500">{votesCount > 99 ? "99+" : votesCount}</p>
+          <CaretDown weight="bold" color="#a4acb4" onClick={removeVotes} />
+        </div>
 
-              <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] md:pl-[2.5rem]">
-                {title}
-              </h1>
+        <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] pl-[2.5rem]">
+          {title}
+        </h1>
 
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeRaw]}
-                children={`${content}\n\n### ${sourceUrl || ""}`}
-                className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] bg-[#fafafa] md:pr-[1rem] md:pl-[2.5rem]"
-              />
-            </div>
-          );
-        }
-      })}
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[rehypeKatex, rehypeRaw]}
+          children={`${content}`}
+          className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] bg-[#fafafa] pr-[1rem] pl-[2.5rem]"
+        />
+        <br/>
+        <br/>
+        <a href={sourceUrl} className="text-blue-600 hover:underline">{sourceUrl || ''}</a>
+      </div>
     </Layout>
   );
 }
 
 export async function getServerSideProps(context) {
-  const { username, post, pagina } = context.query;
+  const { username, post } = context.query;
 
-  const { data } = await findNewsHook({
-    title: undefined,
-    titleSlug: undefined,
-    by: undefined,
-    slug: undefined,
-    sourceUrl: undefined,
-    content: undefined
-  }, {
-    limit: 1,
-    page: pagina || 0,
-  });
+  const { data } = await findNewsHook(
+    {
+      title: undefined,
+      titleSlug: post.toString(),
+      by: username.toString(),
+      slug: undefined,
+      sourceUrl: undefined,
+      content: undefined,
+    },
+    {
+      limit: 1,
+      page: 0,
+    }
+  );
 
   return {
     props: {
-      newsFetched: data,
+      newsFetched: data[0],
     },
   };
 }

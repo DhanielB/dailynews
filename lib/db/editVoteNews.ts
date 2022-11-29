@@ -6,20 +6,18 @@ interface IAuth {
   email: string;
 }
 
-export default async function addNewsVote({
+const prisma = new PrismaClient();
+
+export default async function editVoteNews({
   title,
   votes
 }: {
   title: string;
   votes: number
 }) {
-  const prisma = new PrismaClient();
-  await prisma.$connect();
-
   const news = await prisma.news.update({
     where: {
-      title: title,
-      titleSlug: formatText(title)
+      title: title
     },
     data: {
       votes: votes

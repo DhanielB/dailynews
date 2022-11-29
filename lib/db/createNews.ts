@@ -6,6 +6,8 @@ interface IAuth {
   email: string;
 }
 
+const prisma = new PrismaClient();
+
 export default async function createNews({
   title,
   by,
@@ -21,9 +23,6 @@ export default async function createNews({
   content: string;
   auth: IAuth
 }) {
-  const prisma = new PrismaClient();
-  await prisma.$connect();
-
   const news = await prisma.users.update({
     where: auth,
     data: {
