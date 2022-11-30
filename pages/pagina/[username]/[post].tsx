@@ -1,8 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
-import "bytemd/dist/index.min.css";
-import "bytemd/dist/index.min.css";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
 import findNewsHook from "../../../lib/db/findNews";
@@ -24,17 +22,39 @@ import { formatDistance } from "date-fns";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username } = router.query;
-  const [voted, setVoted] = useState(false)
+  const [voted, setVoted] = useState(false);
   const [votesCount, setVotesCount] = useState(newsFetched.votes);
   const [showConfetti, setShowConfetti] = useState("off");
   const { id, title, content, sourceUrl, createdAt } = newsFetched;
 
-  const user = useUser({})
+  const user = useUser({});
+
+  function RenderComments({ comments }) {
+    return (
+      <div>
+        <ul>
+          {comments.map((comment) => {
+            const { by, content, comments } = comment;
+            return (
+              <li key={by}>
+                <div>
+                  <h1>
+                    {content} - {by}
+                  </h1>
+                  <RenderComments comments={comments} />
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
 
   async function addVotes() {
-    if(!voted && user?.email) {
+    if (!voted && user?.email) {
       setVotesCount(votesCount + 1);
-      setVoted(true)
+      setVoted(true);
 
       await axios.post("/api/v1/db/editVoteNews", {
         title: newsFetched.title,
@@ -44,9 +64,9 @@ export default function username({ newsFetched }) {
   }
 
   async function removeVotes() {
-    if(voted && user?.email) {
+    if (voted && user?.email) {
       setVotesCount(votesCount - 1);
-      setVoted(false)
+      setVoted(false);
 
       await axios.post("/api/v1/db/editVoteNews", {
         title: newsFetched.title,
@@ -90,17 +110,24 @@ export default function username({ newsFetched }) {
           />
         </Head>
         {/* @ts-ignore */}
-        <code className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 cursor-pointer hover:underline" onClick={() => {
-          router.push(`/pagina/${username}`)
-        }}>
+        <code
+          className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 cursor-pointer hover:underline"
+          onClick={() => {
+            router.push(`/pagina/${username}`);
+          }}
+        >
           {username}
         </code>
 
-        <p className="text-[0.80rem] text-gray-500 rounded-md ml-[8rem] my-[0.5rem] top-[0.8rem] hover:underline absolute">Há {formatDistance(Date.now(), createdAt, { locale: ptBR })}</p>
+        <p className="text-[0.80rem] text-gray-500 rounded-md ml-[8rem] my-[0.5rem] top-[0.8rem] hover:underline absolute">
+          Há {formatDistance(Date.now(), createdAt, { locale: ptBR })}
+        </p>
 
         <div className="absolute">
           <CaretUp weight="bold" color="#a4acb4" onClick={addVotes} />
-          <p className="text-center text-blue-500">{votesCount > 99 ? "99+" : votesCount}</p>
+          <p className="text-center text-blue-500">
+            {votesCount > 99 ? "99+" : votesCount}
+          </p>
           <CaretDown weight="bold" color="#a4acb4" onClick={removeVotes} />
         </div>
 
@@ -114,9 +141,32 @@ export default function username({ newsFetched }) {
           children={`${content}`}
           className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] bg-[#fafafa] pr-[1rem] pl-[2.5rem]"
         />
-        <br/>
-        <br/>
-        <a href={sourceUrl} className="text-blue-600 hover:underline">{sourceUrl || ''}</a>
+        <br />
+        <br />
+        <a href={sourceUrl} className="text-blue-600 hover:underline">
+          {sourceUrl || ""}
+        </a>
+        <br />
+        <div>
+          <button>Comentar</button>
+          <RenderComments
+            comments={[
+              {
+                id: 1,
+                by: "dhanielbrandao2@gmail.com",
+                content: "Que legal!",
+                comments: [
+                  {
+                    id: 2,
+                    by: "dhanielbrandao2@gmail.com",
+                    content: "Que legal 2!",
+                    comments: [],
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
       </div>
     </Layout>
   );
