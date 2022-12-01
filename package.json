@@ -20,7 +20,6 @@
     "magic-sdk": "*",
     "next": "*",
     "phosphor-react": "*",
-    "prisma": "*",
     "react": "*",
     "react-confetti": "*",
     "react-dom": "*",
@@ -37,6 +36,7 @@
     "@types/react": "*",
     "autoprefixer": "*",
     "postcss": "*",
+    "prisma": "*",
     "tailwindcss": "*",
     "typescript": "*"
   },
