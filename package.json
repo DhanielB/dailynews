@@ -39,7 +39,8 @@
     "postcss": "*",
     "prisma": "*",
     "tailwindcss": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "vercel": "^28.7.0"
   },
   "version": "0.0.0"
 }
