@@ -8,28 +8,46 @@ import { CaretLeft, CaretRight } from "phosphor-react";
 import axios from "axios";
 import { useUser } from "../../lib/hooks/useUser";
 import { useEffect, useState } from "react";
+import { getLoginSession } from "../../lib/auth/auth";
+import { redirect } from "next/dist/server/api-utils";
 
-const Home = ({ usersFetched, page }) => {
+export default function Users({ usersFetched, page, redirect }) {
   const router = useRouter();
   const user = useUser({ redirectTo: "/" });
 
   const [email, setEmail] = useState("");
+  const [userFetched, setUserFetched] = useState({
+    name: '',
+    email: '',
+    role: '',
+    nuked: false
+  });
 
   useEffect(() => {
+    for(let userFetchedData of usersFetched) {
+      if(userFetchedData.email == user?.email) {
+        setUserFetched(userFetchedData)
+      }
+    }
+
+    if(userFetched.role == "USER") {
+      router.push("/")
+    }
+    
     setEmail(user?.email);
   }, [user]);
 
-  async function handleUnNuke() {
-    await axios.post("/api/v1/db/nuke", {
+  async function handleEditRoleUser(role: "ADMIN" | "USER") {
+    await axios.post("/api/v1/db/editRoleUser", {
       email: email,
-      nuked: false,
+      role: role,
     });
   }
 
-  async function handleNuke() {
+  async function handleNuke(nuked: boolean) {
     await axios.post("/api/v1/db/nuke", {
       email: email,
-      nuked: true,
+      nuked: nuked,
     });
   }
 
@@ -37,8 +55,9 @@ const Home = ({ usersFetched, page }) => {
     <Layout>
       <ul className="ml-[1.25rem] mt-[1.5rem] break-words md:ml-[1.25rem] md:mt-[1.5rem]">
         {usersFetched.map((users, usersCounted) => {
-          const { name, email, nuked, createdAt } = users;
+          const { name, email, nuked, role, createdAt } = users;
           const [isNuked, setIsNuked] = useState(nuked);
+          const [userRole, setUserRole] = useState(role);
 
           return (
             <li
@@ -68,12 +87,24 @@ const Home = ({ usersFetched, page }) => {
                   {formatDistance(Date.now(), createdAt, { locale: ptBR })}
                 </span>{" "}
                 ·{" "}
+                {userRole == "USER" ? (
+                  <span className="text-blue-500" onClick={async () => {
+                    setUserRole("ADMIN")
+                    await handleEditRoleUser("ADMIN")
+                  }}>Promover</span>
+                ) : (
+                  <span className="text-blue-500" onClick={async () => {
+                    setUserRole("USER")
+                    await handleEditRoleUser("USER")
+                  }}>Rebaixar</span>
+                )}{" "}
+                ·{" "}
                 {isNuked ? (
                   <span
                     className="text-red-500"
                     onClick={async () => {
                       setIsNuked((state) => !state);
-                      await handleUnNuke();
+                      await handleNuke(false);
                     }}
                   >
                     Banido
@@ -83,7 +114,7 @@ const Home = ({ usersFetched, page }) => {
                     className="text-red-500"
                     onClick={async () => {
                       setIsNuked((state) => !state);
-                      await handleNuke();
+                      await handleNuke(true);
                     }}
                   >
                     Banir
@@ -189,6 +220,7 @@ const Home = ({ usersFetched, page }) => {
 };
 
 export async function getServerSideProps(context) {
+  let redirect = false
   const { pagina } = context.query;
 
   const { data } = await findUser(
@@ -202,9 +234,8 @@ export async function getServerSideProps(context) {
   return {
     props: {
       usersFetched: data,
+      redirect: redirect,
       page: Number(pagina > 0 ? pagina : 0 || 0),
     },
   };
 }
-
-export default Home;

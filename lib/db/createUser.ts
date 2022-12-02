@@ -14,6 +14,7 @@ export default async function createUser({
       name: name,
       email: email,
       nuked: false,
+      role: 'USER',
       createdAt: Date.now(),
     },
   });

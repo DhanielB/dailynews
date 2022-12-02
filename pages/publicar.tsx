@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
 import formatText from "../lib/hooks/formatText";
 import { useUser } from "../lib/hooks/useUser";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import "highlight.js/styles/github.css";
 import "github-markdown-css/github-markdown-light.css";
 import ReactMarkdown from "react-markdown";
@@ -14,16 +14,22 @@ import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
 import { Warning } from "phosphor-react";
 import findUser from "../lib/db/findUser";
-import filterObject from "../lib/hooks/filterObject";
 
-export default function Publicar({ userFetched }) {
+export default function Publicar({ usersFetched }) {
   const user = useUser({ redirectTo: "/cadastro" });
+  const router = useRouter()
 
   const [mode, setMode] = useState("write");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
+  const [userFetched, setUserFetched] = useState({
+    name: '',
+    email: '',
+    role: '',
+    nuked: false
+  });
   const [canPublish, setCanPublish] = useState(true);
   const [showTitleError, setShowTitleError] = useState("");
   const [showContentError, setShowContentError] = useState("");
@@ -123,6 +129,12 @@ export default function Publicar({ userFetched }) {
   }
 
   useEffect(() => {
+    for(let userFetchedData of usersFetched) {
+      if(userFetchedData.email == user?.email) {
+        setUserFetched(userFetchedData)
+      }
+    }
+
     setEmail(user?.email);
   }, [user]);
 
@@ -239,15 +251,17 @@ export default function Publicar({ userFetched }) {
           </button>
         </div>
       ) : (
-        <div>
+        <div className="flex items-center justify-center w-screen h-[calc(screen-4rem)]">
+          <h1 className="flex items-center justify-center w-screen font-extrabold text-4xl top-[2rem] md:text-6xl absolute">Você foi banido!</h1>
+          <p className="flex items-center justify-center w-screen text-gray-500 font-extrabold text-xl top-[8rem] md:text-2xl absolute">Eu não esperava isto de você</p>
           <svg
-            width="800"
-            height="800"
+            width="400"
+            height="400"
             viewBox="0 0 800 800"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <rect width="800" height="800" fill="white" />
+            <rect width="400" height="400" fill="white" />
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
@@ -287,21 +301,14 @@ export default function Publicar({ userFetched }) {
 }
 
 export async function getServerSideProps() {
-  const user = useUser({});
-
-  const { data } = await findUser(
-    {
-      email: user?.email
-    },
-    filterObject({
-      limit: 0,
-      page: 0
-    })
-  );
+  const { data } = await findUser({}, {
+    limit: 0,
+    page: 0
+  });
 
   return {
     props: {
-      userFetched: data[0]
+      usersFetched: data
     }
   }
 }

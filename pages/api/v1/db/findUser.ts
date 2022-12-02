@@ -6,17 +6,13 @@ export default async function findUsers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { name, email, nuked, page, limit } = req.body;
+  const { name, email, nuked, role, page, limit } = req.body;
 
-  console.log({
-    name: name,
-    email: email,
-    nuked: Boolean(nuked),
-  })
   const data = await findUser({
     name: name,
     email: email,
     nuked: Boolean(nuked),
+    role: role
   }, filterObject({
     page: page,
     limit: limit

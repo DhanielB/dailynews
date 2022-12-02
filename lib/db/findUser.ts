@@ -6,11 +6,13 @@ const prisma = new PrismaClient();
 export default async function findUser({
   name,
   email,
-  nuked
+  nuked,
+  role
 }: {
   name?: string;
   email?: string;
   nuked?: boolean;
+  role?: string;
 }, othersConfigs: { limit: number, page: number }) {
   function formatOthersConfigs(othersConfigs: { page?: any; limit?: any }) {
     let othersConfigsChanged: { skip?: any, take?: any } = {};
@@ -30,7 +32,8 @@ export default async function findUser({
     where: filterObject({
       name: name,
       email: email,
-      nuked: nuked
+      nuked: nuked,
+      role: role
     }),
     ...formatedOthersConfigs
   });
