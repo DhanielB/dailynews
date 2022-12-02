@@ -16,47 +16,68 @@ export default function Users({ usersFetched, page, redirect }) {
   const user = useUser({ redirectTo: "/" });
 
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const [userFetched, setUserFetched] = useState({
-    name: '',
-    email: '',
-    role: '',
-    nuked: false
+    name: "",
+    email: "",
+    role: "",
+    nuked: false,
   });
 
   useEffect(() => {
-    for(let userFetchedData of usersFetched) {
-      if(userFetchedData.email == user?.email) {
-        setUserFetched(userFetchedData)
+    for (let userFetchedData of usersFetched) {
+      if (userFetchedData.email == user?.email) {
+        setUserFetched(userFetchedData);
       }
     }
 
-    if(userFetched.role == "USER") {
-      router.push("/")
+    if (userFetched.role == "USER") {
+      router.push("/");
     }
-    
+
     setEmail(user?.email);
+    setLoading(false);
   }, [user]);
 
   async function handleEditRoleUser(role: "ADMIN" | "USER") {
-    await axios.post("/api/v1/db/editRoleUser", {
-      email: email,
-      role: role,
-    }, {
-      headers: {
-        request: process.env.NEXT_SECRET_API_KEY
+    await axios.post(
+      "/api/v1/db/editRoleUser",
+      {
+        email: email,
+        role: role,
+      },
+      {
+        headers: {
+          request: process.env.NEXT_SECRET_API_KEY,
+        },
       }
-    });
+    );
   }
 
   async function handleNuke(nuked: boolean) {
-    await axios.post("/api/v1/db/nuke", {
-      email: email,
-      nuked: nuked,
-    }, {
-      headers: {
-        request: process.env.NEXT_SECRET_API_KEY
+    await axios.post(
+      "/api/v1/db/nuke",
+      {
+        email: email,
+        nuked: nuked,
+      },
+      {
+        headers: {
+          request: process.env.NEXT_SECRET_API_KEY,
+        },
       }
-    });
+    );
+  }
+
+  if (loading) {
+    return (
+      <Layout>
+        <p className="text-gray-400 top-[1rem] left-[10rem] md:top-[1rem] md:left-[29.5rem] absolute">
+          Carregando...
+        </p>
+      </Layout>
+    );
   }
 
   return (
@@ -96,15 +117,25 @@ export default function Users({ usersFetched, page, redirect }) {
                 </span>{" "}
                 ·{" "}
                 {userRole == "USER" ? (
-                  <span className="text-blue-500" onClick={async () => {
-                    setUserRole("ADMIN")
-                    await handleEditRoleUser("ADMIN")
-                  }}>Promover</span>
+                  <span
+                    className="text-blue-500"
+                    onClick={async () => {
+                      setUserRole("ADMIN");
+                      await handleEditRoleUser("ADMIN");
+                    }}
+                  >
+                    Promover
+                  </span>
                 ) : (
-                  <span className="text-blue-500" onClick={async () => {
-                    setUserRole("USER")
-                    await handleEditRoleUser("USER")
-                  }}>Rebaixar</span>
+                  <span
+                    className="text-blue-500"
+                    onClick={async () => {
+                      setUserRole("USER");
+                      await handleEditRoleUser("USER");
+                    }}
+                  >
+                    Rebaixar
+                  </span>
                 )}{" "}
                 ·{" "}
                 {isNuked ? (
@@ -225,10 +256,10 @@ export default function Users({ usersFetched, page, redirect }) {
       ) : null}
     </Layout>
   );
-};
+}
 
 export async function getServerSideProps(context) {
-  let redirect = false
+  let redirect = false;
   const { pagina } = context.query;
 
   const { data } = await findUser(
