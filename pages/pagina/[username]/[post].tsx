@@ -139,7 +139,7 @@ export default function username({ newsFetched }) {
           remarkPlugins={[remarkGfm, remarkMath]}
           rehypePlugins={[rehypeKatex, rehypeRaw]}
           children={`${content}`}
-          className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] bg-[#fafafa] pr-[1rem] pl-[2.5rem]"
+          className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] pr-[1rem] pl-[2.5rem]"
         />
         <br />
         <br />
