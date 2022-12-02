@@ -14,14 +14,14 @@ export default async function createNews({
   slug,
   sourceUrl,
   content,
-  auth
+  auth,
 }: {
   title: string;
   by: string;
   slug: string;
   sourceUrl: string;
   content: string;
-  auth: IAuth
+  auth: IAuth;
 }) {
   const news = await prisma.users.update({
     where: auth,
@@ -38,9 +38,9 @@ export default async function createNews({
           votes: 0,
           editedAt: Date.now(),
           createdAt: Date.now(),
-        }
-      }
-    }
+        },
+      },
+    },
   });
 
   await prisma.$disconnect();
