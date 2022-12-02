@@ -11,7 +11,7 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import Confetti from "react-confetti";
 import { useEffect, useState } from "react";
-import { CaretUp, CaretDown } from "phosphor-react";
+import { CaretUp, CaretDown, Link } from "phosphor-react";
 
 import "katex/dist/katex.min.css";
 import axios from "axios";
@@ -22,57 +22,28 @@ import { formatDistance } from "date-fns";
 export default function username({ newsFetched }) {
   const router = useRouter();
   const { username } = router.query;
-  const [voted, setVoted] = useState(false);
   const [votesCount, setVotesCount] = useState(newsFetched.votes);
   const [showConfetti, setShowConfetti] = useState("off");
   const { id, title, content, sourceUrl, createdAt } = newsFetched;
 
   const user = useUser({});
 
-  function RenderComments({ comments }) {
-    return (
-      <div>
-        <ul>
-          {comments.map((comment) => {
-            const { by, content, comments } = comment;
-            return (
-              <li key={by}>
-                <div>
-                  <h1>
-                    {content} - {by}
-                  </h1>
-                  <RenderComments comments={comments} />
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  }
-
   async function addVotes() {
-    if (!voted && user?.email) {
-      setVotesCount(votesCount + 1);
-      setVoted(true);
+    setVotesCount(votesCount + 1);
 
-      await axios.post("/api/v1/db/editVoteNews", {
-        title: newsFetched.title,
-        votes: votesCount + 1,
-      });
-    }
+    await axios.post("/api/v1/db/editVoteNews", {
+      title: newsFetched.title,
+      votes: votesCount + 1,
+    });
   }
 
   async function removeVotes() {
-    if (voted && user?.email) {
-      setVotesCount(votesCount - 1);
-      setVoted(false);
+    setVotesCount(votesCount - 1);
 
-      await axios.post("/api/v1/db/editVoteNews", {
-        title: newsFetched.title,
-        votes: votesCount - 1,
-      });
-    }
+    await axios.post("/api/v1/db/editVoteNews", {
+      title: newsFetched.title,
+      votes: votesCount - 1,
+    });
   }
 
   useEffect(() => {
@@ -81,16 +52,11 @@ export default function username({ newsFetched }) {
     }, 5000);
 
     setShowConfetti(window.localStorage.getItem("confetti"));
-    setVoted(Boolean(window.localStorage.getItem(`voted-${id}`)));
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem("confetti", showConfetti || "off");
   }, [showConfetti]);
-
-  useEffect(() => {
-    window.localStorage.setItem(`voted-${id}`, voted.toString());
-  }, [voted]);
 
   return (
     <Layout>
@@ -143,29 +109,14 @@ export default function username({ newsFetched }) {
         />
         <br />
         <br />
-        <a href={sourceUrl} className="text-blue-600 hover:underline">
-          {sourceUrl || ""}
-        </a>
-        <br />
-        <div>
-          <button>Comentar</button>
-          <RenderComments
-            comments={[
-              {
-                id: 1,
-                by: "dhanielbrandao2@gmail.com",
-                content: "Que legal!",
-                comments: [
-                  {
-                    id: 2,
-                    by: "dhanielbrandao2@gmail.com",
-                    content: "Que legal 2!",
-                    comments: [],
-                  },
-                ],
-              },
-            ]}
-          />
+        <div className="inline">
+          <Link className="inline" size={18} />
+          <a
+            href={sourceUrl}
+            className="inline text-blue-600 ml-[0.5rem] hover:underline"
+          >
+            {sourceUrl || ""}
+          </a>
         </div>
       </div>
     </Layout>

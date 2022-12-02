@@ -8,6 +8,11 @@ export default async function findUsers(
 ) {
   const { name, email, nuked, page, limit } = req.body;
 
+  console.log({
+    name: name,
+    email: email,
+    nuked: Boolean(nuked),
+  })
   const data = await findUser({
     name: name,
     email: email,

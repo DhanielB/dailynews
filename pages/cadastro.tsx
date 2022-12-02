@@ -6,10 +6,13 @@ import Layout from "../components/Layout";
 import { useUser } from "../lib/hooks/useUser";
 import axios from "axios";
 import formatText from "../lib/hooks/formatText";
+import InputForm from "../components/InputForm";
 
 const SignUp = () => {
   useUser({ redirectTo: "/publicar", redirectIfFound: true });
 
+  const [userError, setUserError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [userData, setUserData] = useState("");
   const [emailData, setEmailData] = useState("");
 
@@ -22,20 +25,19 @@ const SignUp = () => {
 
     try {
       const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
-      const didToken = await magic.auth.loginWithMagicLink({
-        email: body.email,
-      });
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
         email: body.email,
-        limit: 1000,
-        page: 0,
       });
 
       if (responseUser.data.count == 0) {
+        const didToken = await magic.auth.loginWithMagicLink({
+          email: body.email,
+        });
+
         const responseCreateUser = await axios.post("/api/v1/db/createUser", {
           name: formatText(userData),
-          email: body.email
+          email: body.email,
         });
 
         if (responseCreateUser.status == 200) {
@@ -54,6 +56,8 @@ const SignUp = () => {
             console.log(await responseLogin.text());
           }
         }
+      } else {
+        setEmailError("Usúario já existente");
       }
     } catch (error) {
       console.error("An unexpected error happened occurred:", error);
@@ -67,34 +71,46 @@ const SignUp = () => {
           Cadastro
         </h1>
 
-        <p className="text-[0.8rem] font-semibold top-[5.9rem] left-[1rem] md:left-[16rem] md:top-[5.45rem] md:text-[0.875rem] absolute">
-          Nome de Usuário
-        </p>
-        <input
+        <InputForm
+          error={userError}
+          className="name"
+          text="Nome de Usuário"
           onChange={(e) => {
             setUserData(e.currentTarget.value);
           }}
           required
           maxLength={25}
-          className="text-5 px-4 py-[0.75rem] top-[7rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none bg-transparent focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
-        ></input>
+        />
 
-        <p className="text-[0.8rem] font-semibold top-[10.85rem] left-[1rem] md:left-[16rem] md:top-[11rem] md:text-[0.875rem] absolute">
-          Email
-        </p>
-        <input
+        <InputForm
+          error={emailError}
+          className="email"
+          text="Email"
+          type="email"
           onChange={(e) => {
             setEmailData(e.currentTarget.value);
           }}
-          type="email"
           required
-          className="text-5 px-4 py-[0.75rem] top-[12rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none bg-transparent focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[12.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
-        ></input>
+        />
 
-        <button className="w-[24.7rem] text-base top-[16rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[16rem] md:left-[16rem] md:w-[31.5rem] absolute">
+        <button className="w-[24.7rem] text-base top-[18rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[16rem] md:left-[16rem] md:w-[31.5rem] absolute">
           Criar Cadrastro
         </button>
       </form>
+
+      <style jsx global>{`
+        .email {
+          top: 5.5rem;
+          position: absolute;
+        }
+
+        @media (min-width: 768px) {
+          .email {
+            top: 5.225rem;
+            position: absolute;
+          }
+        }
+      `}</style>
     </Layout>
   );
 };

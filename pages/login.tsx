@@ -5,10 +5,12 @@ import { useState } from "react";
 import Layout from "../components/Layout";
 import { useUser } from "../lib/hooks/useUser";
 import axios from "axios";
+import InputForm from "../components/InputForm";
 
 const Login = () => {
   useUser({ redirectTo: "/publicar", redirectIfFound: true });
 
+  const [emailError, setEmailError] = useState("");
   const [emailData, setEmailData] = useState("");
 
   async function handleLogin(event) {
@@ -20,15 +22,16 @@ const Login = () => {
 
     try {
       const magic = new Magic(process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY);
-      const didToken = await magic.auth.loginWithMagicLink({
-        email: body.email,
-      });
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
         email: body.email,
       });
 
       if (responseUser.data.count > 0) {
+        const didToken = await magic.auth.loginWithMagicLink({
+          email: body.email,
+        });
+
         const responseLogin = await fetch("/api/v1/auth/login", {
           method: "POST",
           headers: {
@@ -43,6 +46,8 @@ const Login = () => {
         } else {
           console.log(await responseLogin.text());
         }
+      }else{
+        setEmailError("Não foi possível encontrar este usúario")
       }
     } catch (error) {
       console.error("An unexpected error happened occurred:", error);
@@ -56,20 +61,16 @@ const Login = () => {
           Login
         </h1>
 
-        <p className="text-[0.8rem] font-semibold top-[5.9rem] left-[1rem] md:left-[16rem] md:top-[5.45rem] md:text-[0.875rem] absolute">
-          Email
-        </p>
-        <input
+        <InputForm error={emailError} text="Email" type="email"
           onChange={(e) => {
             setEmailData(e.currentTarget.value);
           }}
-          type="email"
-          value={emailData}
           required
-          className="text-5 px-4 py-[0.75rem] top-[7rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none bg-transparent focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
-        ></input>
-
-        <button className="w-[24.7rem] text-base top-[11.5rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[10.5rem] md:left-[16rem] md:w-[31.5rem] absolute" onClick={handleLogin}>
+        />
+        <button
+          className="w-[24.7rem] text-base top-[11.5rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[10.5rem] md:left-[16rem] md:w-[31.5rem] absolute"
+          onClick={handleLogin}
+        >
           Login
         </button>
       </form>
