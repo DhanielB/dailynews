@@ -2,6 +2,15 @@ import { magic } from "../../../../lib/auth/magic";
 import { setLoginSession } from "../../../../lib/auth/auth";
 
 export default async function login(req, res) {
+  const { request } = req.headers;
+
+  if(request == process.env.NEXT_SECRET_API_KEY) {
+    return res.status(401).json({
+      status: 401,
+      message: "Not authorized"
+    })
+  }
+  
   try {
     const didToken = req.headers.authorization.slice(7);
     const metadata = await magic.users.getMetadataByToken(didToken);

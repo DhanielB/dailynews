@@ -86,6 +86,10 @@ export default function Publicar({ usersFetched }) {
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
         email: email,
+      }, {
+        headers: {
+          request: process.env.NEXT_SECRET_API_KEY
+        }
       });
 
       if (responseUser.data?.data.length > 0) {
@@ -100,6 +104,10 @@ export default function Publicar({ usersFetched }) {
           auth: {
             email: email,
           },
+        }, {
+          headers: {
+            request: process.env.NEXT_SECRET_API_KEY
+          }
         });
 
         if (responsePublish.status == 200) {

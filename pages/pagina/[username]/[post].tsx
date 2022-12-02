@@ -34,6 +34,10 @@ export default function username({ newsFetched }) {
     await axios.post("/api/v1/db/editVoteNews", {
       title: newsFetched.title,
       votes: votesCount + 1,
+    }, {
+      headers: {
+        request: process.env.NEXT_SECRET_API_KEY
+      }
     });
   }
 
@@ -43,6 +47,10 @@ export default function username({ newsFetched }) {
     await axios.post("/api/v1/db/editVoteNews", {
       title: newsFetched.title,
       votes: votesCount - 1,
+    }, {
+      headers: {
+        request: process.env.NEXT_SECRET_API_KEY
+      }
     });
   }
 

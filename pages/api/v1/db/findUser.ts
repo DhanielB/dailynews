@@ -6,7 +6,15 @@ export default async function findUsers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { request } = req.headers;
   const { name, email, nuked, role, page, limit } = req.body;
+
+  if(request == process.env.NEXT_SECRET_API_KEY) {
+    return res.status(401).json({
+      status: 401,
+      message: "Not authorized"
+    })
+  }
 
   const data = await findUser({
     name: name,

@@ -41,6 +41,10 @@ export default function Users({ usersFetched, page, redirect }) {
     await axios.post("/api/v1/db/editRoleUser", {
       email: email,
       role: role,
+    }, {
+      headers: {
+        request: process.env.NEXT_SECRET_API_KEY
+      }
     });
   }
 
@@ -48,6 +52,10 @@ export default function Users({ usersFetched, page, redirect }) {
     await axios.post("/api/v1/db/nuke", {
       email: email,
       nuked: nuked,
+    }, {
+      headers: {
+        request: process.env.NEXT_SECRET_API_KEY
+      }
     });
   }
 

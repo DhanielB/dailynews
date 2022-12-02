@@ -28,6 +28,10 @@ const SignUp = () => {
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
         email: body.email,
+      }, {
+        headers: {
+          request: process.env.NEXT_SECRET_API_KEY
+        }
       });
 
       if (responseUser.data.count == 0) {
@@ -38,12 +42,17 @@ const SignUp = () => {
         const responseCreateUser = await axios.post("/api/v1/db/createUser", {
           name: formatText(userData),
           email: body.email,
+        }, {
+          headers: {
+            request: process.env.NEXT_SECRET_API_KEY
+          }
         });
 
         if (responseCreateUser.status == 200) {
           const responseLogin = await fetch("/api/v1/auth/login", {
             method: "POST",
             headers: {
+              request: process.env.NEXT_SECRET_API_KEY,
               "Content-Type": "application/json",
               Authorization: "Bearer " + didToken,
             },

@@ -15,7 +15,7 @@ model Users {
   name      String @unique
   email     String @unique
   nuked     Boolean
-  role      String?
+  role      String
   createdAt Int
   News      News[]
 }
