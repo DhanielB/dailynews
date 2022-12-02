@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <form onSubmit={handleLogin}>
+      <form>
         <h1 className="text-[2rem] pt-[2rem] pl-[0.85rem] font-semibold md:pt-[2rem] md:pl-[15.5rem] md:text-[1.95rem]">
           Login
         </h1>
@@ -66,10 +66,10 @@ const Login = () => {
           type="email"
           value={emailData}
           required
-          className="text-5 px-4 py-[0.75rem] top-[7rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
+          className="text-5 px-4 py-[0.75rem] top-[7rem] left-[0.5rem] w-[24.7rem] border border-black border-opacity-20 rounded-md outline-none bg-transparent focus:border-[#3277ca] md:px-4 md:py-[0.5rem] md:top-[6.725rem] md:left-[16rem] md:w-[31.5rem] absolute"
         ></input>
 
-        <button className="w-[24.7rem] text-base top-[11.5rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[10.5rem] md:left-[16rem] md:w-[31.5rem] absolute">
+        <button className="w-[24.7rem] text-base top-[11.5rem] left-[0.5rem] border border-gray-400 px-3 py-[0.5rem] rounded-md text-white bg-[#2DA44E] focus:bg-[#8ac79b] md:text-base md:top-[10.5rem] md:left-[16rem] md:w-[31.5rem] absolute" onClick={handleLogin}>
           Login
         </button>
       </form>

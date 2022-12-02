@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,31 +10,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Comments {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  /// Field referred in an index, but found no data to define the type.
-  byId Json?  @unique
-}
-
 model News {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
   by           String
-  commentCount BigInt
+  commentCount Int
   content      String
-  createdAt    BigInt
-  editedAt     BigInt
+  createdAt    Int
+  editedAt     Int
   slug         String
   sourceUrl    String
   title        String @unique
   titleSlug    String @unique
-  userId       String @db.ObjectId
-  votes        BigInt
+  userId       String
+  votes        Int
 }
 
 model Users {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt BigInt
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt Int
   email     String  @unique
   name      String  @unique
   nuked     Boolean
+}
+
+model Comments {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  by String
+  content String
+  commentedAt String @default("")
 }
