@@ -129,7 +129,7 @@ export default function username({ newsFetched }) {
       </div>
       <style jsx>{`
       	.votes {
-          -webkit-tap-highlight-color: transparent;
+          user-select: none;
         }
       `}</style>
     </Layout>
