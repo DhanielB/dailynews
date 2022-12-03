@@ -9,7 +9,6 @@ import axios from "axios";
 import { useUser } from "../../lib/hooks/useUser";
 import { useEffect, useState } from "react";
 import { getLoginSession } from "../../lib/auth/auth";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function Users({ usersFetched, page, redirect }) {
   const router = useRouter();

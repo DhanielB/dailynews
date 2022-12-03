@@ -99,7 +99,7 @@ export default function username({ newsFetched }) {
 
         <div className="absolute">
           <CaretUp weight="bold" color="#a4acb4" onClick={addVotes} />
-          <p className="text-center text-blue-500">
+          <p className="votes text-center text-blue-500">
             {votesCount > 99 ? "99+" : votesCount}
           </p>
           <CaretDown weight="bold" color="#a4acb4" onClick={removeVotes} />
@@ -127,6 +127,11 @@ export default function username({ newsFetched }) {
           </a>
         </div>
       </div>
+      <style jsx>{`
+      	.votes {
+          -webkit-tap-highlight-color: transparent;
+        }
+      `}</style>
     </Layout>
   );
 }

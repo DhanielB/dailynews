@@ -12,7 +12,7 @@
     "@prisma/client": "*",
     "@types/node": "*",
     "@vercel/analytics": "*",
-    "axios": "*",
+    "axios": "^1.2.0",
     "cookie": "*",
     "date-fns": "*",
     "github-markdown-css": "*",
