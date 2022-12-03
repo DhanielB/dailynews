@@ -128,7 +128,7 @@ export default function username({ newsFetched }) {
         </div>
       </div>
       <style jsx>{`
-      	.votes {
+      	* {
           user-select: none;
         }
       `}</style>
