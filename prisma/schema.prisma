@@ -40,5 +40,5 @@ model Comments {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   by String
   content String
-  commentedAt String @default("")
+  commentedAt String?
 }

@@ -7,7 +7,7 @@ export default function Header() {
   const router = useRouter();
   const user = useUser({});
 
-  const [lookingAt, setLokingAt] = useState("relevant");
+  const [lookingAt, setLokingAt] = useState("");
 
   useEffect(() => {
     setLokingAt(window.localStorage.getItem("lookingAt"));

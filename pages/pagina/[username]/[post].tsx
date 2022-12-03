@@ -18,39 +18,40 @@ import axios from "axios";
 import { useUser } from "../../../lib/hooks/useUser";
 import ptBR from "date-fns/locale/pt-BR";
 import { formatDistance } from "date-fns";
+import Comments from "../../../components/Comments";
 
-export default function username({ newsFetched }) {
+export default function Post({ newsFetched }) {
   const router = useRouter();
   const { post, username } = router.query;
-  const [votesCount, setVotesCount] = useState(newsFetched.votes);
+  const [id, setId] = useState("");
+  const [voted, setVoted] = useState(false);
+  const [votesCount, setVotesCount] = useState(0);
   const [showConfetti, setShowConfetti] = useState("off");
- 
+
   const user = useUser({});
 
   async function addVotes() {
-    setVotesCount(votesCount + 1);
+    if (!voted && user?.email) {
+      setVotesCount(votesCount + 1);
+      setVoted(true);
 
-    await axios.post("/api/v1/db/editVoteNews", {
-      title: newsFetched.title,
-      votes: votesCount + 1,
-    }, {
-      headers: {
-        request: process.env.NEXT_SECRET_API_KEY
-      }
-    });
+      await axios.post("/api/v1/db/editVoteNews", {
+        title: newsFetched.title,
+        votes: votesCount + 1,
+      });
+    }
   }
 
   async function removeVotes() {
-    setVotesCount(votesCount - 1);
+    if (voted && user?.email) {
+      setVotesCount(votesCount - 1);
+      setVoted(false);
 
-    await axios.post("/api/v1/db/editVoteNews", {
-      title: newsFetched.title,
-      votes: votesCount - 1,
-    }, {
-      headers: {
-        request: process.env.NEXT_SECRET_API_KEY
-      }
-    });
+      await axios.post("/api/v1/db/editVoteNews", {
+        title: newsFetched.title,
+        votes: votesCount - 1,
+      });
+    }
   }
 
   useEffect(() => {
@@ -59,11 +60,16 @@ export default function username({ newsFetched }) {
     }, 5000);
 
     setShowConfetti(window.localStorage.getItem("confetti"));
+    setVoted(Boolean(window.localStorage.getItem(`voted-${id}`)));
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem("confetti", showConfetti || "off");
   }, [showConfetti]);
+
+  useEffect(() => {
+    window.localStorage.setItem(`voted-${id}`, voted.toString());
+  }, [voted]);
 
   return (
     <Layout>
@@ -75,68 +81,128 @@ export default function username({ newsFetched }) {
       />
 
       {newsFetched.map((news) => {
-      const { id, by, title, titleSlug, content, sourceUrl, createdAt } = news; 
-      
-      if(user == by && post == titleSlug) {
-      return (
-      <div className="p-[1rem]">
-        <Head>
-          <title>{title}</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
-        </Head>
-        {/* @ts-ignore */}
-        <code
-          className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 cursor-pointer hover:underline"
-          onClick={() => {
-            router.push(`/pagina/${username}`);
-          }}
-        >
-          {username}
-        </code>
+        const {
+          id,
+          by,
+          title,
+          titleSlug,
+          content,
+          votes,
+          sourceUrl,
+          createdAt,
+        } = news;
 
-        <p className="text-[0.80rem] text-gray-500 rounded-md ml-[8rem] my-[0.5rem] top-[0.8rem] hover:underline absolute">
-          Há {formatDistance(Date.now(), createdAt, { locale: ptBR })}
-        </p>
+        if (username == by && post == titleSlug) {
+          useEffect(() => {
+            setId(id);
+            setVotesCount(votes || 0);
+          }, []);
 
-        <div className="absolute">
-          <CaretUp weight="bold" color="#a4acb4" onClick={addVotes} />
-          <p className="votes text-center text-blue-500">
-            {votesCount > 99 ? "99+" : votesCount}
-          </p>
-          <CaretDown weight="bold" color="#a4acb4" onClick={removeVotes} />
-        </div>
+          return (
+            <div className="p-[1rem]">
+              <Head>
+                <title>{title}</title>
+                <meta
+                  name="viewport"
+                  content="initial-scale=1.0, width=device-width"
+                />
+              </Head>
+              {/* @ts-ignore */}
+              <code
+                className="text-[0.75rem] text-blue-500 rounded-md ml-[2.5rem] my-[0.5rem] mt-6 cursor-pointer hover:underline"
+                onClick={() => {
+                  router.push(`/pagina/${username}`);
+                }}
+              >
+                {username}
+              </code>
 
-        <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] pl-[2.5rem]">
-          {title}
-        </h1>
+              <p className="text-[0.80rem] text-gray-500 rounded-md ml-[8rem] my-[0.5rem] top-[0.8rem] hover:underline absolute">
+                Há {formatDistance(Date.now(), createdAt, { locale: ptBR })}
+              </p>
 
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm, remarkMath]}
-          rehypePlugins={[rehypeKatex, rehypeRaw]}
-          children={`${content}`}
-          className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] pr-[1rem] pl-[2.5rem]"
-        />
-        <br />
-        <br />
-        <div className="inline">
-          <Link className="inline" size={18} />
-          <a
-            href={sourceUrl}
-            className="inline text-blue-600 ml-[0.5rem] hover:underline"
-          >
-            {sourceUrl || ""}
-          </a>
-        </div>
-        <style jsx>{`
-      	* {
-          user-select: none;
+              <div className="absolute">
+                <CaretUp weight="bold" color="#a4acb4" onClick={addVotes} />
+                <p className="votes text-center text-blue-500">
+                  {votesCount > 99 ? "99+" : votesCount || 0}
+                </p>
+                <CaretDown
+                  weight="bold"
+                  color="#a4acb4"
+                  onClick={removeVotes}
+                />
+              </div>
+
+              <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] pl-[2.5rem]">
+                {title}
+              </h1>
+
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm, remarkMath]}
+                rehypePlugins={[rehypeKatex, rehypeRaw]}
+                children={content}
+                className="markdown-body w-[calc(screen-2rem)] break-all pt-[1rem] pr-[1rem] pl-[2.5rem]"
+              />
+              <br />
+              <br />
+              <div className="inline">
+                <Link className="inline" size={18} />
+                <a
+                  href={sourceUrl}
+                  className="inline text-blue-600 ml-[0.5rem] pb-[3rem] hover:underline"
+                >
+                  {sourceUrl || ""}
+                </a>
+                <Comments
+                  comments={[
+                    {
+                      id: "1",
+                      by: "dhanielb",
+                      content: "Que legal 1",
+                      commentedAt: null,
+                    },
+                    {
+                      id: "2",
+                      by: "dhanielb",
+                      content: "Que legal 2",
+                      commentedAt: "1",
+                    },
+                    {
+                      id: "3",
+                      by: "dhanielb",
+                      content: "Que chato 1",
+                      commentedAt: null,
+                    },
+                    {
+                      id: "4",
+                      by: "dhanielb",
+                      content: "Que chato 2",
+                      commentedAt: "3",
+                    },
+                    {
+                      id: "5",
+                      by: "dhanielb",
+                      content: "Que chato 3",
+                      commentedAt: "4",
+                    },
+                    {
+                      id: "6",
+                      by: "dhanielb",
+                      content: "Que chato 4",
+                      commentedAt: "5",
+                    },
+                  ]}
+                />
+              </div>
+              <style jsx>{`
+                * {
+                  user-select: none;
+                }
+              `}</style>
+            </div>
+          );
         }
-      `}</style>
-      </div>
-       )}})}
+      })}
     </Layout>
   );
 }
