@@ -30,7 +30,6 @@ export default function Publicar({ usersFetched }) {
     role: '',
     nuked: false
   });
-  const [loading, setLoading] = useState(false);
   const [canPublish, setCanPublish] = useState(true);
   const [showTitleError, setShowTitleError] = useState("");
   const [showContentError, setShowContentError] = useState("");
@@ -145,18 +144,7 @@ export default function Publicar({ usersFetched }) {
     }
 
     setEmail(user?.email);
-    setLoading(false)
   }, [user]);
-
-  if (loading) {
-    return (
-      <Layout>
-        <p className="text-gray-400 top-[1rem] left-[10rem] md:top-[1rem] md:left-[29.5rem] absolute">
-          Carregando...
-        </p>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>
