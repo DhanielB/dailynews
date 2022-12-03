@@ -130,12 +130,12 @@ export default function username({ newsFetched }) {
             {sourceUrl || ""}
           </a>
         </div>
-      </div>
-      <style jsx>{`
+        <style jsx>{`
       	* {
           user-select: none;
         }
       `}</style>
+      </div>
        )}})}
     </Layout>
   );
