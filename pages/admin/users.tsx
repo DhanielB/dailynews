@@ -35,7 +35,6 @@ export default function Users({ usersFetched, page, redirect }) {
     }
 
     setEmail(user?.email);
-    setLoading(false);
   }, [user]);
 
   async function handleEditRoleUser(role: "ADMIN" | "USER") {
