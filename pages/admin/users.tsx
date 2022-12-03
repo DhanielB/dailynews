@@ -15,8 +15,7 @@ export default function Users({ usersFetched, page, redirect }) {
   const user = useUser({ redirectTo: "/" });
 
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(true);
-
+ 
   const [userFetched, setUserFetched] = useState({
     name: "",
     email: "",
@@ -66,16 +65,6 @@ export default function Users({ usersFetched, page, redirect }) {
           request: process.env.NEXT_SECRET_API_KEY,
         },
       }
-    );
-  }
-
-  if (loading) {
-    return (
-      <Layout>
-        <p className="text-gray-400 top-[1rem] left-[10rem] md:top-[1rem] md:left-[29.5rem] absolute">
-          Carregando...
-        </p>
-      </Layout>
     );
   }
 
