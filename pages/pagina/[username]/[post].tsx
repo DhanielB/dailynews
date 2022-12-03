@@ -21,11 +21,10 @@ import { formatDistance } from "date-fns";
 
 export default function username({ newsFetched }) {
   const router = useRouter();
-  const { username } = router.query;
+  const { post, username } = router.query;
   const [votesCount, setVotesCount] = useState(newsFetched.votes);
   const [showConfetti, setShowConfetti] = useState("off");
-  const { id, title, content, sourceUrl, createdAt } = newsFetched;
-
+ 
   const user = useUser({});
 
   async function addVotes() {
@@ -75,6 +74,11 @@ export default function username({ newsFetched }) {
         numberOfPieces={showConfetti == "on" ? 500 : 0}
       />
 
+      {newsFetched.map((news) => {
+      const { id, by, title, titleSlug, content, sourceUrl, createdAt } = news; 
+      
+      if(user == by && post == titleSlug) {
+      return (
       <div className="p-[1rem]">
         <Head>
           <title>{title}</title>
@@ -132,6 +136,7 @@ export default function username({ newsFetched }) {
           user-select: none;
         }
       `}</style>
+       )}})}
     </Layout>
   );
 }
@@ -149,14 +154,14 @@ export async function getServerSideProps(context) {
       content: undefined,
     },
     {
-      limit: 1,
+      limit: 0,
       page: 0,
     }
   );
 
   return {
     props: {
-      newsFetched: data[0],
+      newsFetched: data,
     },
   };
 }
