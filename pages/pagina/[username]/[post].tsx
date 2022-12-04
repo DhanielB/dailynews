@@ -60,8 +60,11 @@ export default function Post({ newsFetched }) {
     }, 5000);
 
     setShowConfetti(window.localStorage.getItem("confetti"));
-    setVoted(Boolean(window.localStorage.getItem(`voted-${id}`)));
   }, []);
+  
+  useEffect(() => {
+    setVoted(Boolean(window.localStorage.getItem(`voted-${id}`)));
+  }, [id]);
 
   useEffect(() => {
     window.localStorage.setItem("confetti", showConfetti || "off");
