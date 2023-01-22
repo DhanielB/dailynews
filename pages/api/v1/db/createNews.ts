@@ -26,3 +26,11 @@ export default async function createNews(
 
   res.status(200).json(data);
 }
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '100mb'
+        }
+    }
+}
