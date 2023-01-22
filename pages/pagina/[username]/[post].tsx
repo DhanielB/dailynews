@@ -202,9 +202,6 @@ export default function Post({ newsFetched }) {
                 />
               </div>
               <style jsx>{`
-                * {
-                  user-select: none;
-                }
               `}</style>
             </div>
           );
