@@ -70,7 +70,7 @@ export default function Publicar({ usersFetched }) {
   }, [internalContent]);
 
   useEffect(() => {
-    let content = externalContent;
+    let content = externalContent || "";
 
     for(let image of images) {
       const fileName = image["name"];
