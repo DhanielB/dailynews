@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import Layout from "../components/Layout";
@@ -21,7 +22,9 @@ export default function Publicar({ usersFetched }) {
 
   const [mode, setMode] = useState("write");
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [images, setImages] = useState([]);
+  const [internalContent, setInternalContent] = useState("");
+  const [externalContent, setExternalContent] = useState("");
   const [source, setSource] = useState("");
   const [email, setEmail] = useState("");
   const [userFetched, setUserFetched] = useState({
@@ -48,7 +51,9 @@ export default function Publicar({ usersFetched }) {
 
   useEffect(() => {
     setTitle(window.localStorage.getItem("title"));
-    setContent(window.localStorage.getItem("content"));
+    setInternalContent(window.localStorage.getItem("internalContent"));
+    setExternalContent(window.localStorage.getItem("externalContent"));
+    setImages(JSON.parse(window.localStorage.getItem("images")) || []);
     setSource(window.localStorage.getItem("source"));
   }, []);
 
@@ -57,8 +62,27 @@ export default function Publicar({ usersFetched }) {
   }, [title]);
 
   useEffect(() => {
-    window.localStorage.setItem("content", content || "");
-  }, [content]);
+    window.localStorage.setItem("images", JSON.stringify(images) || "[]");
+  }, [images]);
+
+  useEffect(() => {
+    window.localStorage.setItem("internalContent", internalContent || "");
+  }, [internalContent]);
+
+  useEffect(() => {
+    let content = externalContent;
+
+    for(let image of images) {
+      const fileName = image["name"];
+      const fileContent = image["content"];
+
+      content = content.replaceAll(fileName, fileContent);
+    }
+
+    setInternalContent(content);
+
+    window.localStorage.setItem("externalContent", externalContent || "");
+  }, [externalContent]);
 
   useEffect(() => {
     window.localStorage.setItem("source", source || "");
@@ -81,7 +105,7 @@ export default function Publicar({ usersFetched }) {
   async function handlePublish(event) {
     event.preventDefault();
 
-    if (canPublish && title != "" && content.length > 50) {
+    if (canPublish && title != "" && externalContent.length > 50) {
       setCanPublish(false);
 
       const responseUser = await axios.post("/api/v1/db/findUser", {
@@ -100,7 +124,7 @@ export default function Publicar({ usersFetched }) {
           by: by,
           slug: `/pagina/${formatText(by)}/${formatText(title)}`,
           sourceUrl: source,
-          content: content,
+          content: internalContent,
           auth: {
             email: email,
           },
@@ -127,8 +151,10 @@ export default function Publicar({ usersFetched }) {
 
     fileReader.onload = async (e) => {
       const fileContent = e.target.result;
+      const fileName = v4();
 
-      setContent((state) => `${state}\n![](${fileContent})`);
+      setImages(state => [...state, { name: fileName, content: fileContent }]);
+      setExternalContent(state => `${state}\n![](${fileName})`);
     };
 
     for (let index = 0; index <= files.length - 1; index++) {
@@ -183,7 +209,7 @@ export default function Publicar({ usersFetched }) {
                   rehypePlugins={[rehypeKatex, rehypeRaw]}
                   className="markdown-body flex flex-col overflow-auto box-border h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
                 >
-                  {content}
+                  {internalContent}
                 </ReactMarkdown>
               </div>
             ) : (
@@ -191,9 +217,9 @@ export default function Publicar({ usersFetched }) {
                 <textarea
                   className="bg-transparent h-72 pl-[8rem] pr-[1.5rem] first-line:pr-[8rem] py-[3rem] top-[9.725rem] left-[1.625rem] w-[22.5rem] border-[2px] border-black border-opacity-20 rounded-md outline-none focus:border-[#3277ca] md:px-[8rem] md:py-[3rem] md:top-[9.725rem] md:left-[1.625rem] md:w-[60.75rem] absolute"
                   onChange={(e) => {
-                    setContent(e.currentTarget.value);
+                    setExternalContent(e.currentTarget.value);
                   }}
-                  value={content}
+                  value={externalContent}
                   required={true}
                 ></textarea>
 
