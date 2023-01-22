@@ -201,8 +201,6 @@ export default function Post({ newsFetched }) {
                   ]}
                 />
               </div>
-              <style jsx>{`
-              `}</style>
             </div>
           );
         }
