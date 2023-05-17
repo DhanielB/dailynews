@@ -156,10 +156,6 @@ export default function Post({ newsFetched }) {
                 >
                   {sourceUrl || ""}
                 </a>
-
-                <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] pl-[0.5rem] mt-[3rem]">
-                  Comentários
-                </h1>
                
               </div>
             </div>
