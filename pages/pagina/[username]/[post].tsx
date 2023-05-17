@@ -160,46 +160,7 @@ export default function Post({ newsFetched }) {
                 <h1 className="font-[600] text-[1.5rem] break-words pr-[1rem] pl-[0.5rem] mt-[3rem]">
                   Comentários
                 </h1>
-                <Comments
-                  comments={[
-                    {
-                      id: "1",
-                      by: "dhanielb",
-                      content: "Que post bacana!",
-                      commentedAt: null,
-                    },
-                    {
-                      id: "2",
-                      by: "dhiego",
-                      content: "Também concordo",
-                      commentedAt: "1",
-                    },
-                    {
-                      id: "3",
-                      by: "dhanielb",
-                      content: "Quem quiser saber mais somente comentar abaixo :)",
-                      commentedAt: null,
-                    },
-                    {
-                      id: "4",
-                      by: "fernanda",
-                      content: "Eu quero saber mais!",
-                      commentedAt: "3",
-                    },
-                    {
-                      id: "5",
-                      by: "dhiego",
-                      content: "Eu támbem",
-                      commentedAt: "4",
-                    },
-                    {
-                      id: "6",
-                      by: "marcos",
-                      content: "Támbem não esquece de mim",
-                      commentedAt: "5",
-                    },
-                  ]}
-                />
+               
               </div>
             </div>
           );
